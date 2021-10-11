@@ -1,0 +1,8 @@
+{
+  "name": "hollar",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "9e380dd1"
+}
