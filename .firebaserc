@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "hollar-9bfe5": {
+      "hosting": {
+        "app": [
+          "hollar-9bfe5"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "hollar-9bfe5"
+  }
+}

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validator, Validators} from '@angular/forms';
 import {AlertController, LoadingController} from '@ionic/angular';
 import {Router} from '@angular/router';
+import {AuthService} from '../../services/auth.service';
 
 
 @Component({
@@ -11,8 +12,11 @@ import {Router} from '@angular/router';
 })
 export class SignUpPage implements OnInit {
   signupCredentials: FormGroup;
+  private userDict = {};
 
-  constructor(private fb: FormBuilder, private alertController: AlertController, private router: Router, private loadingController: LoadingController) { }
+  constructor(private fb: FormBuilder, private alertController: AlertController,
+              private router: Router, private loadingController: LoadingController,
+              public authService: AuthService) { }
 
   ngOnInit() {
     this.signupCredentials = this.fb.group({
@@ -30,9 +34,30 @@ export class SignUpPage implements OnInit {
     const loading = await this.loadingController.create();
     await loading.present();
 
-    //Insert sign up authentication here
-    await loading.dismiss();
-    await this.router.navigateByUrl('/tabs', {replaceUrl: true});
+    //build user model here
+    this.userDict = {
+      email: this.signupCredentials.get('email')?.value,
+      firstName: this.signupCredentials.get('firstName')?.value,
+      lastName: this.signupCredentials.get('lastName')?.value,
+      password: this.signupCredentials.get('password')?.value,
+      phoneNumber: this.signupCredentials.get('phoneNumber')?.value
+    };
+
+    this.authService.doRegister(this.signupCredentials.get('email').value, this.signupCredentials.get('password').value, this.userDict)
+      .then(async res => {
+        await loading.dismiss();
+        console.log(this.userDict);
+        await this.router.navigateByUrl('/tabs', {replaceUrl: true});
+      }, async err => {
+        await loading.dismiss();
+        const alert = await this.alertController.create({
+          header: 'Sign-Up Failed',
+          message: err.message,
+          buttons: ['OK']
+        });
+        await alert.present();
+      });
+
   }
 
   async goToLogin(){

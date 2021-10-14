@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validator, Validators} from '@angular/forms';
 import {AlertController, LoadingController} from '@ionic/angular';
 import {Router} from '@angular/router';
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,9 @@ import {Router} from '@angular/router';
 export class LoginPage implements OnInit {
   credentials: FormGroup;
 
-  constructor(private fb: FormBuilder, private alertController: AlertController, private router: Router, private loadingController: LoadingController) { }
+  constructor(private fb: FormBuilder, private alertController: AlertController,
+              private router: Router, private loadingController: LoadingController,
+              public authService: AuthService) { }
 
   ngOnInit() {
     this.credentials = this.fb.group({
@@ -24,9 +27,19 @@ export class LoginPage implements OnInit {
     const loading = await this.loadingController.create();
     await loading.present();
 
-    //Insert authentication here
-    await loading.dismiss();
-    await this.router.navigateByUrl('/tabs', {replaceUrl: true});
+    this.authService.doLogin(this.credentials.get('email').value, this.credentials.get('password').value)
+      .then(async res => {
+        await loading.dismiss();
+        await this.router.navigateByUrl('/tabs', {replaceUrl: true});
+      }, async err => {
+        await loading.dismiss();
+        const alert = await this.alertController.create({
+          header: 'Login Failed',
+          message: err.message,
+          buttons: ['OK']
+        });
+        await alert.present();
+      });
   }
 
   get email() {
