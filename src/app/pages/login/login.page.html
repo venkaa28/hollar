@@ -1,9 +1,29 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title>Hollar</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <form (ngSubmit)="login()" [formGroup]="credentials">
+    <div>
+      <ion-item>
+        <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+      </ion-item>
+      <div *ngIf="(email.dirty || email.touched) && email.errors">
+        <span *ngIf="email.errors?.required">Email is required</span>
+        <span *ngIf="email.errors?.email">Email is invalid</span>
+      </div>
+      <ion-item>
+        <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+      </ion-item>
+      <div *ngIf="(password.dirty || password.touched) && password.errors">
+        <span *ngIf="password.errors?.required">Password is required</span>
+        <span *ngIf="password.errors?.minlength">Password needs to be at least 6 characters</span>
+      </div>
+    </div>
+    <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Login</ion-button>
+  </form>
+  <ion-button type="button" expand="block" (click)="goToSignUP()" >Dont have an account? Sign Up Here</ion-button>
 </ion-content>
