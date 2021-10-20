@@ -3,7 +3,8 @@ import {LinkedAccountsModel} from './linkedAccounts.model';
 
 export class UserProfile {
   uid: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phoneNumber: string;
   connections: [];
@@ -12,5 +13,5 @@ export class UserProfile {
   industry?: string;
   job?: string;
   documents?: [];
-  linkedAccounts: LinkedAccountsModel;
+  linkedAccounts?: LinkedAccountsModel;
 }
