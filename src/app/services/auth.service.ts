@@ -55,4 +55,14 @@ export class AuthService {
     });
   }
 
+  doResetPassword(email){
+    return new Promise<any>((resolve, reject) => {
+      this.afAuth.sendPasswordResetEmail(email)
+        .then(
+          res => resolve(res),
+          err => reject(err)
+        );
+    });
+  }
+
 }

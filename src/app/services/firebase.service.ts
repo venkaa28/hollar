@@ -30,7 +30,7 @@ export class FirebaseService {
   }
 
   getLoggedInUserProfile(){
-    const currentUser = firebase.auth().currentUser;
+    // const currentUser = firebase.auth().currentUser;
     //await firebase.database().ref('accounts/' + currentUser.uid).on('value', async (snapshot) => {
     //}
   }
