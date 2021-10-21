@@ -24,7 +24,6 @@ export class AuthService {
       this.afAuth.createUserWithEmailAndPassword(userDict.email, userDict.password)
         .then(
           async res => {
-            await this.firebaseService.writeNewUser(userDict);
             this.user = {
               uid: firebase.auth().currentUser.uid,
               firstName: userDict.firstName,
@@ -37,7 +36,9 @@ export class AuthService {
               industry : '',
               job: '',
               linkedAccounts: new LinkedAccountsModel(),
+              documents: [],
             };
+            await this.firebaseService.writeNewUser(this.user);
             resolve(res);
           },
           err => reject(err)
@@ -49,7 +50,14 @@ export class AuthService {
     return new Promise<any>((resolve, reject) => {
       this.afAuth.signInWithEmailAndPassword(email, password)
       .then(
-        res => resolve(res),
+        res => {
+          this.firebaseService.getLoggedInUserProfile()
+            .then((data) => {
+              this.user = data;
+              console.log(this.user);
+            });
+          resolve(res);
+        },
         err => reject(err)
       );
     });

@@ -17,6 +17,7 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 
 import {AuthService} from './services/auth.service';
 import firebase from "firebase/compat/app";
+import {FirebaseService} from "./services/firebase.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,6 +36,8 @@ import firebase from "firebase/compat/app";
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    AuthService,
+    FirebaseService,
   ],
   bootstrap: [AppComponent],
 })
