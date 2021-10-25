@@ -37,6 +37,7 @@ export class AuthService {
               job: '',
               linkedAccounts: new LinkedAccountsModel(),
               documents: [],
+              profilePicture: ''
             };
             await this.firebaseService.writeNewUser(this.user);
             resolve(res);
@@ -46,7 +47,17 @@ export class AuthService {
     });
   }
 
-  doLogin(email, password){
+doLogin(email, password){
+    // await this.afAuth.signInWithEmailAndPassword(email, password).then( async () => {
+    //    await this.firebaseService.getLoggedInUserProfile()
+    //       .then((data) => {
+    //         this.user = data;
+    //         console.log(this.user);
+    //         return new Promise(<any> | null);
+    //       });
+    //   }
+    // );
+
     return new Promise<any>((resolve, reject) => {
       this.afAuth.signInWithEmailAndPassword(email, password)
       .then(
@@ -70,6 +81,19 @@ export class AuthService {
           res => resolve(res),
           err => reject(err)
         );
+    });
+  }
+
+  doLogout(){
+    return new Promise((resolve, reject) => {
+      this.afAuth.signOut()
+        .then(res => {
+          this.firebaseService.unsubscribeOnLogOut();
+          resolve(res);
+        }, ).catch((error) => {
+        console.log(error);
+        reject();
+      });
     });
   }
 

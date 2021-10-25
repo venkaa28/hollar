@@ -14,4 +14,5 @@ export class UserProfile {
   job = '';
   documents: [];
   linkedAccounts: LinkedAccountsModel;
+  profilePicture: '';
 }

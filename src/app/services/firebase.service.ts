@@ -40,7 +40,7 @@ export class FirebaseService {
             .subscribe(snapshots => {
               resolve(snapshots);
             }, err => {
-              reject(err)
+              reject(err);
             });
         }
       });
@@ -49,6 +49,11 @@ export class FirebaseService {
     //const userData = this.afDB.list('accounts/'+currentUser.uid).valueChanges();
     //await firebase.database().ref('accounts/' + currentUser.uid).on('value', async (snapshot) => {
     //}
+  }
+
+  unsubscribeOnLogOut(){
+    //remember to unsubscribe from the snapshotChanges
+    this.snapshotChangesSubscription.unsubscribe();
   }
 
 }
