@@ -1,35 +1,99 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/compat/app';
-import {AngularFireAuth} from "@angular/fire/compat/auth";
+import {AngularFireAuth} from '@angular/fire/compat/auth';
+import {UserProfile} from '../../models/userProfile.model';
+import {FirebaseService} from './firebase.service';
+import {Observable} from 'rxjs';
+import {LinkedAccountsModel} from '../../models/linkedAccounts.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private afAuth: AngularFireAuth) {
+  public user: UserProfile;
+
+  constructor(private afAuth: AngularFireAuth,
+              private firebaseService: FirebaseService) {
 
   }
 
   //change to accept a user model
-  doRegister(email, password, userDict){
+  doRegister(userDict){
     return new Promise<any>((resolve, reject) => {
-      this.afAuth.createUserWithEmailAndPassword(email, password)
+      this.afAuth.createUserWithEmailAndPassword(userDict.email, userDict.password)
         .then(
-          res => resolve(res),
-          // create new user profile here and push to database
+          async res => {
+            this.user = {
+              uid: firebase.auth().currentUser.uid,
+              firstName: userDict.firstName,
+              lastName: userDict.lastName,
+              email: userDict.email,
+              connections: [],
+              inviteRequests: [],
+              phoneNumber: userDict.phoneNumber,
+              company: '',
+              industry : '',
+              job: '',
+              linkedAccounts: new LinkedAccountsModel(),
+              documents: [],
+              profilePicture: ''
+            };
+            await this.firebaseService.writeNewUser(this.user);
+            resolve(res);
+          },
           err => reject(err)
         );
     });
   }
 
-  doLogin(email, password){
+doLogin(email, password){
+    // await this.afAuth.signInWithEmailAndPassword(email, password).then( async () => {
+    //    await this.firebaseService.getLoggedInUserProfile()
+    //       .then((data) => {
+    //         this.user = data;
+    //         console.log(this.user);
+    //         return new Promise(<any> | null);
+    //       });
+    //   }
+    // );
+
     return new Promise<any>((resolve, reject) => {
       this.afAuth.signInWithEmailAndPassword(email, password)
       .then(
-        res => resolve(res),
+        res => {
+          this.firebaseService.getLoggedInUserProfile()
+            .then((data) => {
+              this.user = data;
+              console.log(this.user);
+            });
+          resolve(res);
+        },
         err => reject(err)
       );
+    });
+  }
+
+  doResetPassword(email){
+    return new Promise<any>((resolve, reject) => {
+      this.afAuth.sendPasswordResetEmail(email)
+        .then(
+          res => resolve(res),
+          err => reject(err)
+        );
+    });
+  }
+
+  doLogout(){
+    return new Promise((resolve, reject) => {
+      this.afAuth.signOut()
+        .then(res => {
+          this.firebaseService.unsubscribeOnLogOut();
+          resolve(res);
+        }, ).catch((error) => {
+        console.log(error);
+        reject();
+      });
     });
   }
 

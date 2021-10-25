@@ -34,7 +34,6 @@ export class SignUpPage implements OnInit {
     const loading = await this.loadingController.create();
     await loading.present();
 
-    //build user model here
     this.userDict = {
       email: this.signupCredentials.get('email')?.value,
       firstName: this.signupCredentials.get('firstName')?.value,
@@ -43,10 +42,9 @@ export class SignUpPage implements OnInit {
       phoneNumber: this.signupCredentials.get('phoneNumber')?.value
     };
 
-    this.authService.doRegister(this.signupCredentials.get('email').value, this.signupCredentials.get('password').value, this.userDict)
+    this.authService.doRegister(this.userDict)
       .then(async res => {
         await loading.dismiss();
-        console.log(this.userDict);
         await this.router.navigateByUrl('/tabs', {replaceUrl: true});
       }, async err => {
         await loading.dismiss();
