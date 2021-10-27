@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import firebase from 'firebase/compat/app';
-import {AngularFireAuth} from '@angular/fire/compat/auth';
+import firebase from 'firebase';
+import {AngularFireAuth} from '@angular/fire/auth';
 import {UserProfile} from '../../models/userProfile.model';
 import {FirebaseService} from './firebase.service';
 import {Observable} from 'rxjs';
@@ -16,6 +16,17 @@ export class AuthService {
   constructor(private afAuth: AngularFireAuth,
               private firebaseService: FirebaseService) {
 
+    this.afAuth.onAuthStateChanged( (firebaseUser) => {
+      if(firebaseUser) {
+        this.firebaseService.getLoggedInUserProfile()
+          .then((data) => {
+          this.user = data;
+          console.log(this.user);
+        });
+      } else {
+        this.user = null;
+      }
+    });
   }
 
   //change to accept a user model
@@ -48,27 +59,10 @@ export class AuthService {
   }
 
 doLogin(email, password){
-    // await this.afAuth.signInWithEmailAndPassword(email, password).then( async () => {
-    //    await this.firebaseService.getLoggedInUserProfile()
-    //       .then((data) => {
-    //         this.user = data;
-    //         console.log(this.user);
-    //         return new Promise(<any> | null);
-    //       });
-    //   }
-    // );
-
     return new Promise<any>((resolve, reject) => {
       this.afAuth.signInWithEmailAndPassword(email, password)
       .then(
-        res => {
-          this.firebaseService.getLoggedInUserProfile()
-            .then((data) => {
-              this.user = data;
-              console.log(this.user);
-            });
-          resolve(res);
-        },
+        res => resolve(res),
         err => reject(err)
       );
     });
