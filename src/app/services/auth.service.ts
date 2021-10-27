@@ -12,7 +12,8 @@ import {AngularFirestore} from "@angular/fire/firestore";
 })
 export class AuthService {
 
-  public user: Observable<UserProfile> | null = null;
+  public userObservable: Observable<UserProfile> | null = null;
+  public user: UserProfile;
 
   constructor(private afAuth: AngularFireAuth,
               private firebaseService: FirebaseService,
@@ -20,14 +21,22 @@ export class AuthService {
 
     this.afAuth.onAuthStateChanged( async (firebaseUser) => {
       if (firebaseUser) {
-        this.user = await this.afStore.doc<UserProfile>('users/' + firebaseUser.uid).valueChanges();
+        this.userObservable = await this.afStore.doc<UserProfile>('users/' + firebaseUser.uid).valueChanges();
+        this.userObservable.subscribe((data) => {
+          this.user = data;
+        });
       } else {
+        this.userObservable = null;
         this.user = null;
       }
     });
   }
 
-  getUser() {
+  getUserObservable() {
+    return this.userObservable;
+  }
+
+  getUser(){
     return this.user;
   }
 

@@ -3,6 +3,8 @@ import {FirebaseService} from "../../../services/firebase.service";
 import {AuthService} from "../../../services/auth.service";
 import {UserProfile} from "../../../../models/userProfile.model";
 import {user} from "rxfire/auth";
+import {Observable} from "rxjs";
+import {mergeMap, switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-tab2',
@@ -11,21 +13,28 @@ import {user} from "rxfire/auth";
 })
 export class Tab2Page implements OnInit {
 
-  //connections: Array<UserProfile>;
+  connectionsObservable: Observable<UserProfile[]> = null;
+  connections: UserProfile[];
 
   constructor(private firebaseService: FirebaseService, private authService: AuthService) {}
 
   async ngOnInit() {
-    this.authService.getUser().subscribe(async (userData) => {
-      console.log(userData);
-      this.firebaseService.getConnections(userData.connections).then((data) => {
-        //return a subscription or observable from getConnections and assign it to connections
-        //this.connections = data;
-      });
+    this.authService.getUserObservable().pipe(
+      mergeMap( async userData => {
+        console.log(userData);
+        const connects = userData['user'].connections;
+        console.log(connects);
+        console.log(userData['user'].connections);
+        return this.firebaseService.getConnections(connects);
+      })
+    ).subscribe( (connections) => {
+      this.connectionsObservable = connections;
+      connections.subscribe( (data) => {
+          this.connections = data;
+          console.log(this.connections);
+      }
+      );
     });
-    //console.log(this.authService.getUser().subscribe((user) => user.connections));
-    //
-    //console.log(this.connections);
   }
 
 }
