@@ -4,12 +4,14 @@ import firebase from 'firebase';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFirestore} from "@angular/fire/firestore";
 import {UserProfile} from "../../models/userProfile.model";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
 
+  public connectionsObservable: Observable<Array<UserProfile>> | null = null;
   private snapshotChangesSubscription: any;
 
   constructor(private afAuth: AngularFireAuth, private afDB: AngularFireDatabase,
@@ -48,6 +50,20 @@ export class FirebaseService {
     //const userData = this.afDB.list('accounts/'+currentUser.uid).valueChanges();
     //await firebase.database().ref('accounts/' + currentUser.uid).on('value', async (snapshot) => {
     //}
+  }
+
+  getConnections(connections: []){
+    console.log(connections);
+    return new Promise<any>((resolve, reject) => {
+      this.afAuth.user.subscribe(currentUser => {
+        if(currentUser){
+          this.snapshotChangesSubscription = this.afStore
+            .collection('users', ref => ref.where(firebase.firestore.FieldPath.documentId(), 'in', connections))
+            .snapshotChanges();
+          resolve(this.snapshotChangesSubscription);
+        }
+      });
+    });
   }
 
   unsubscribeOnLogOut(){

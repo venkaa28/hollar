@@ -30,7 +30,7 @@
     "@ionic/angular": "^5.5.2",
     "@robingenz/capacitor-firebase-authentication": "^0.3.11",
     "firebase": "^8.10.0",
-    "rxfire": "^6.0.0",
+    "rxfire": "^5.0.0-canary.4370987",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
