@@ -1,31 +1,16 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Rolodex
-    </ion-title>
+    <ion-title style="center">Rolodex</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Rolodex</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-card type="button">
-    <ion-item>
-      <ion-avatar src="assets/icon/profilePicPlaceholder.png" slot="start"></ion-avatar>
-      <ion-card-title size="large" slot="start">John Doe</ion-card-title>
-      <ion-card-subtitle>UW-Madison </ion-card-subtitle>
-    </ion-item>
-    <ion-card-content>
-      Hey! My name is John and I am studying CS at UW-Madison. Contact me at johndoe@wisc.edu!
-    </ion-card-content>
-    <ion-item href="tabs/tab3">
-      <ion-label>View Profile</ion-label>
-    </ion-item>
-  </ion-card>
-
+  <ion-searchbar showClearButton="always" debounce="500"></ion-searchbar>
+  <app-connection-card *ngFor="let connection of this.connections"
+                       name="{{connection.name}}"
+                       email="{{connection.email}}"
+                       phoneNumber="{{connection.phoneNumber}}"
+  ></app-connection-card>
 <!--  <ion-card>-->
 <!--    <ion-card-header>-->
 <!--      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>-->
