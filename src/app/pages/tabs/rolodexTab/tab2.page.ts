@@ -15,13 +15,18 @@ export class Tab2Page implements OnInit {
 
   connectionsObservable: Observable<UserProfile[]> = null;
   connections: UserProfile[];
+  currentUser: UserProfile;
 
-  constructor(private firebaseService: FirebaseService, private authService: AuthService) {}
+  constructor(private firebaseService: FirebaseService, private authService: AuthService) {
+    this.currentUser = this.authService.getUser();
+  }
 
   async ngOnInit() {
+    //fully working code
     this.authService.getUserObservable().pipe(
       mergeMap( async userData => {
         console.log(userData);
+        this.currentUser = userData['user'];
         const connects = userData['user'].connections;
         console.log(connects);
         console.log(userData['user'].connections);
