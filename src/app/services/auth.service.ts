@@ -1,21 +1,43 @@
 import { Injectable } from '@angular/core';
-import firebase from 'firebase/compat/app';
-import {AngularFireAuth} from '@angular/fire/compat/auth';
+import firebase from 'firebase';
+import {AngularFireAuth} from '@angular/fire/auth';
 import {UserProfile} from '../../models/userProfile.model';
 import {FirebaseService} from './firebase.service';
 import {Observable} from 'rxjs';
 import {LinkedAccountsModel} from '../../models/linkedAccounts.model';
+import {AngularFirestore} from "@angular/fire/firestore";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  public userObservable: Observable<UserProfile> | null = null;
   public user: UserProfile;
 
   constructor(private afAuth: AngularFireAuth,
-              private firebaseService: FirebaseService) {
+              private firebaseService: FirebaseService,
+              private afStore: AngularFirestore) {
 
+    this.afAuth.onAuthStateChanged( async (firebaseUser) => {
+      if (firebaseUser) {
+        this.userObservable = await this.afStore.doc<UserProfile>('users/' + firebaseUser.uid).valueChanges();
+        this.userObservable.subscribe((data) => {
+          this.user = data;
+        });
+      } else {
+        this.userObservable = null;
+        this.user = null;
+      }
+    });
+  }
+
+  getUserObservable() {
+    return this.userObservable;
+  }
+
+  getUser(){
+    return this.user;
   }
 
   //change to accept a user model
@@ -24,7 +46,7 @@ export class AuthService {
       this.afAuth.createUserWithEmailAndPassword(userDict.email, userDict.password)
         .then(
           async res => {
-            this.user = {
+            const newUser: UserProfile = {
               uid: firebase.auth().currentUser.uid,
               firstName: userDict.firstName,
               lastName: userDict.lastName,
@@ -39,7 +61,7 @@ export class AuthService {
               documents: [],
               profilePicture: ''
             };
-            await this.firebaseService.writeNewUser(this.user);
+            await this.firebaseService.writeNewUser(newUser);
             resolve(res);
           },
           err => reject(err)
@@ -48,27 +70,10 @@ export class AuthService {
   }
 
 doLogin(email, password){
-    // await this.afAuth.signInWithEmailAndPassword(email, password).then( async () => {
-    //    await this.firebaseService.getLoggedInUserProfile()
-    //       .then((data) => {
-    //         this.user = data;
-    //         console.log(this.user);
-    //         return new Promise(<any> | null);
-    //       });
-    //   }
-    // );
-
     return new Promise<any>((resolve, reject) => {
       this.afAuth.signInWithEmailAndPassword(email, password)
       .then(
-        res => {
-          this.firebaseService.getLoggedInUserProfile()
-            .then((data) => {
-              this.user = data;
-              console.log(this.user);
-            });
-          resolve(res);
-        },
+        res => resolve(res),
         err => reject(err)
       );
     });
