@@ -18,7 +18,7 @@ export class Tab2Page implements OnInit {
   currentUser: UserProfile;
 
   constructor(private firebaseService: FirebaseService, private authService: AuthService) {
-    this.currentUser = this.authService.getUser();
+    //this.currentUser = this.authService.getUser();
   }
 
   async ngOnInit() {
