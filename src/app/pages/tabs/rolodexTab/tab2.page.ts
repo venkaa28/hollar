@@ -15,7 +15,7 @@ import {LinkedAccountsModel} from "../../../../models/linkedAccounts.model";
 export class Tab2Page implements OnInit {
 
   connectionsObservable: Observable<UserProfile[]> = null;
-  connections: UserProfile[];
+  connectionList: UserProfile[];
   currentUser: UserProfile;
 
   constructor(private firebaseService: FirebaseService, private authService: AuthService) {
@@ -36,8 +36,8 @@ export class Tab2Page implements OnInit {
     ).subscribe( (connections) => {
       this.connectionsObservable = connections;
       connections.subscribe( (data) => {
-          this.connections = data;
-          console.log(this.connections);
+          this.connectionList = data;
+          console.log(this.connectionList);
       }
       );
     });
@@ -45,76 +45,124 @@ export class Tab2Page implements OnInit {
 
   connections: Array<UserProfile> = [
      {
-       name: 'Nolan Smith',
+       firstName: 'Nolan',
+       lastName: 'Smith',
        uid: 'test1',
        email: 'test@test.com',
        phoneNumber: '1234567999',
        connections: [],
        inviteRequests: [],
        linkedAccounts: new LinkedAccountsModel(),
+       company: '',
+       industry: '',
+       profilePicture: '',
+       job: '',
+       documents: [],
     },
     {
-      name: 'Kush Dani',
+      firstName: 'Kush',
+      lastName: 'Dani',
       uid: 'test1',
       email: 'test@test.com',
       phoneNumber: '1234567890',
       connections: [],
       inviteRequests: [],
       linkedAccounts: new LinkedAccountsModel(),
+      company: '',
+      industry: '',
+      profilePicture: '',
+      job: '',
+      documents: [],
     },
     {
-      name: 'Nathan Zyck',
+      firstName: 'Nathan',
+      lastName: 'Zyck',
       uid: 'test1',
       email: 'zyck@wisc.edu',
       phoneNumber: '1234567890',
       connections: [],
       inviteRequests: [],
       linkedAccounts: new LinkedAccountsModel(),
+      company: '',
+      industry: '',
+      profilePicture: '',
+      job: '',
+      documents: [],
     },
     {
-      name: 'Ryan Brumm',
+      firstName: 'Ryan',
+      lastName: 'Brum',
       uid: 'test1',
       email: 'ryan@wisc.edu',
       phoneNumber: '1234567890',
       connections: [],
       inviteRequests: [],
       linkedAccounts: new LinkedAccountsModel(),
+      company: '',
+      industry: '',
+      profilePicture: '',
+      job: '',
+      documents: [],
     },
     {
-      name: 'Ani Venka',
+      firstName: 'Ani',
+      lastName: 'Venky',
       uid: 'test1',
       email: 'Ani@wisc.edu',
       phoneNumber: '1234567890',
       connections: [],
       inviteRequests: [],
       linkedAccounts: new LinkedAccountsModel(),
+      company: '',
+      industry: '',
+      profilePicture: '',
+      job: '',
+      documents: [],
     },
     {
-      name: 'Leonardo DiCaprio',
+      firstName: 'Leonardo',
+      lastName: 'Dicaprio',
       uid: 'test1',
       email: 'LeoD@hollywood.com',
       phoneNumber: '1234567890',
       connections: [],
       inviteRequests: [],
       linkedAccounts: new LinkedAccountsModel(),
+      company: '',
+      industry: '',
+      profilePicture: '',
+      job: '',
+      documents: [],
     },
     {
-      name: 'Lebron James',
+      firstName: 'Lebron',
+      lastName: 'James',
       uid: 'test1',
       email: 'Lebron@jordan.com',
       phoneNumber: '1234567890',
       connections: [],
       inviteRequests: [],
       linkedAccounts: new LinkedAccountsModel(),
+      company: '',
+      industry: '',
+      profilePicture: '',
+      job: '',
+      documents: [],
     },
     {
-      name: 'Kirill Kaprizov',
+      firstName: 'Kirill',
+      lastName: 'Kaprizov',
       uid: 'test1',
       email: 'kirillthethrill@test.com',
       phoneNumber: '1234567890',
       connections: [],
       inviteRequests: [],
       linkedAccounts: new LinkedAccountsModel(),
+      company: '',
+      industry: '',
+      profilePicture: '',
+      job: '',
+      documents: [],
     }
   ];
 

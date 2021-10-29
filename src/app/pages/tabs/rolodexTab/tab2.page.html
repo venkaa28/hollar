@@ -7,7 +7,7 @@
 <ion-content [fullscreen]="true">
   <ion-searchbar showClearButton="always" debounce="500"></ion-searchbar>
   <app-connection-card *ngFor="let connection of this.connections"
-                       name="{{connection.name}}"
+                       name="{{connection.firstName}} {{connection.lastName}}"
                        email="{{connection.email}}"
                        phoneNumber="{{connection.phoneNumber}}"
   ></app-connection-card>
