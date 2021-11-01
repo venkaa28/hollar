@@ -5,6 +5,7 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFirestore} from "@angular/fire/firestore";
 import {UserProfile} from "../../models/userProfile.model";
 import {Observable} from "rxjs";
+import {tap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -19,49 +20,80 @@ export class FirebaseService {
 
   }
 
-  writeNewUser(user: UserProfile){
-    // AFStore Code
-    return new Promise<any>((resolve, reject) => {
-      const currentUser = firebase.auth().currentUser;
-      user.linkedAccounts = {...user.linkedAccounts};
-      this.afStore.collection('users').doc(currentUser.uid).set({user})
-        .then(
-          res => resolve(res),
-          err => reject(err)
-        );
-    });
+  user$(): Observable<UserProfile> {
+    return this.afStore.doc<UserProfile>(`users/${firebase.auth().currentUser.uid}`).valueChanges().pipe(
+      tap(r => {
+        console.groupCollapsed(`Firestore Streaming users/${firebase.auth().currentUser.uid}`);
+        console.log(r);
+        console.groupEnd();
+      }),
+    );
   }
 
-  getLoggedInUserProfile(){
-    //const currentUser = firebase.auth().currentUser;
-    return new Promise<any>((resolve, reject) => {
-      this.afAuth.user.subscribe(currentUser => {
-        if(currentUser){
-          this.snapshotChangesSubscription = this.afStore.doc<UserProfile>('users/' + currentUser.uid).valueChanges()
-            .subscribe(snapshots => {
-              resolve(snapshots);
-            }, err => {
-              reject(err);
-            });
-        }
-      });
-    });
-    //return this.afStore.collection<UserProfile>('users').doc(currentUser.uid).get();
-    //const userData = this.afDB.list('accounts/'+currentUser.uid).valueChanges();
-    //await firebase.database().ref('accounts/' + currentUser.uid).on('value', async (snapshot) => {
-    //}
-  }
-
-  getConnections(connections: []){
-    //console.log(connections);
-    // return new Promise<any>((resolve, reject) => {
+  connections$(connections: []): Observable<UserProfile[]> {
     return this.afStore.collection<UserProfile>('users', ref => ref.where(firebase.firestore.FieldPath.documentId(), 'in', connections))
-      .valueChanges();
+      .valueChanges().pipe(
+      tap(r => {
+        console.groupCollapsed(`Firestore Streaming [current users connections] [collection$]`);
+        console.table(r);
+        console.groupEnd();
+      }),
+    );
+}
+
+  writeUser(user: UserProfile) {
+    const id = firebase.auth().currentUser.uid;
+    user.linkedAccounts = {...user.linkedAccounts};
+    return  this.afStore.collection('users').doc(id).set({user}).then(_ => {
+        console.groupCollapsed(`Firestore Service user [create]`);
+        console.log('[Id]', id, user);
+        console.groupEnd();
+    });
   }
 
-  unsubscribeOnLogOut(){
-    //remember to unsubscribe from the snapshotChanges
-    this.snapshotChangesSubscription.unsubscribe();
-  }
+  // writeNewUser(user: UserProfile){
+  //   // AFStore Code
+  //   return new Promise<any>((resolve, reject) => {
+  //     const currentUser = firebase.auth().currentUser;
+  //     user.linkedAccounts = {...user.linkedAccounts};
+  //     this.afStore.collection('users').doc(currentUser.uid).set({user})
+  //       .then(
+  //         res => resolve(res),
+  //         err => reject(err)
+  //       );
+  //   });
+  // }
+  //
+  // getLoggedInUserProfile(){
+  //   //const currentUser = firebase.auth().currentUser;
+  //   return new Promise<any>((resolve, reject) => {
+  //     this.afAuth.user.subscribe(currentUser => {
+  //       if(currentUser){
+  //         this.snapshotChangesSubscription = this.afStore.doc<UserProfile>('users/' + currentUser.uid).valueChanges()
+  //           .subscribe(snapshots => {
+  //             resolve(snapshots);
+  //           }, err => {
+  //             reject(err);
+  //           });
+  //       }
+  //     });
+  //   });
+  //   //return this.afStore.collection<UserProfile>('users').doc(currentUser.uid).get();
+  //   //const userData = this.afDB.list('accounts/'+currentUser.uid).valueChanges();
+  //   //await firebase.database().ref('accounts/' + currentUser.uid).on('value', async (snapshot) => {
+  //   //}
+  // }
+  //
+  // getConnections(connections: []){
+  //   //console.log(connections);
+  //   // return new Promise<any>((resolve, reject) => {
+  //   return this.afStore.collection<UserProfile>('users', ref => ref.where(firebase.firestore.FieldPath.documentId(), 'in', connections))
+  //     .valueChanges();
+  // }
+  //
+  // unsubscribeOnLogOut(){
+  //   //remember to unsubscribe from the snapshotChanges
+  //   this.snapshotChangesSubscription.unsubscribe();
+  // }
 
 }
