@@ -1,16 +1,16 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title style="center">Rolodex</ion-title>
+    <ion-title class="ion-text-center">Rolodex</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-searchbar showClearButton="always" debounce="500"></ion-searchbar>
+  <ion-searchbar color="primary" showClearButton="always" debounce="500"></ion-searchbar>
   <app-connection-card *ngFor="let connection of this.connections"
                        name="{{connection.firstName}} {{connection.lastName}}"
                        email="{{connection.email}}"
                        phoneNumber="{{connection.phoneNumber}}"
-  ></app-connection-card>
+   color="primary"></app-connection-card>
 <!--  <ion-card>-->
 <!--    <ion-card-header>-->
 <!--      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>-->
