@@ -32,8 +32,17 @@ export class AuthService {
     });
   }
 
-  getUserObservable() {
-    return this.userObservable;
+  async getUserObservable() {
+    if (this.userObservable != null) {
+      return this.userObservable;
+    }else {
+      this.userObservable = await this.afStore.doc<UserProfile>('users/' + firebase.auth().currentUser.uid).valueChanges();
+      this.userObservable.subscribe((data) => {
+        this.user = data;
+      });
+      return this.userObservable;
+    }
+
   }
 
   getUser(){

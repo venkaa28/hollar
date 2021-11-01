@@ -53,17 +53,8 @@ export class FirebaseService {
   }
 
   getConnections(connections: []){
-    console.log(connections);
+    //console.log(connections);
     // return new Promise<any>((resolve, reject) => {
-    //   this.afAuth.user.subscribe(currentUser => {
-    //     if(currentUser){
-    //       this.snapshotChangesSubscription = this.afStore
-    //         .collection('users', ref => ref.where(firebase.firestore.FieldPath.documentId(), 'in', connections))
-    //         .snapshotChanges();
-    //       resolve(this.snapshotChangesSubscription);
-    //     }
-    //   });
-    // });
     return this.afStore.collection<UserProfile>('users', ref => ref.where(firebase.firestore.FieldPath.documentId(), 'in', connections))
       .valueChanges();
   }

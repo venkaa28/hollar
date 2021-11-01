@@ -6,11 +6,13 @@
 
 <ion-content [fullscreen]="true">
   <ion-searchbar showClearButton="always" debounce="500"></ion-searchbar>
-  <app-connection-card *ngFor="let connection of this.connections"
-                       name="{{connection.firstName}} {{connection.lastName}}"
-                       email="{{connection.email}}"
-                       phoneNumber="{{connection.phoneNumber}}"
-  ></app-connection-card>
+    <app-connection-card *ngFor="let connection of this.connections;"
+                         name="{{connection.firstName}} {{connection.lastName}}"
+                         email="{{connection.email}}"
+                         phoneNumber="{{connection.phoneNumber}}"
+    ></app-connection-card>
+
+
 <!--  <ion-card>-->
 <!--    <ion-card-header>-->
 <!--      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>-->

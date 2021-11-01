@@ -24,20 +24,21 @@ export class Tab2Page implements OnInit {
 
   async ngOnInit() {
     //fully working code
-    this.authService.getUserObservable().pipe(
+    (await this.authService.getUserObservable()).pipe(
       mergeMap( async userData => {
         console.log(userData);
         this.currentUser = userData['user'];
+        console.log(this.currentUser);
         const connects = userData['user'].connections;
-        console.log(connects);
-        console.log(userData['user'].connections);
+        //console.log(connects);
+        //console.log(userData['user'].connections);
         return this.firebaseService.getConnections(connects);
       })
     ).subscribe( (connections) => {
       this.connectionsObservable = connections;
       connections.subscribe( (data) => {
           this.connectionList = data;
-          console.log(this.connectionList);
+          //console.log(this.connectionList);
       }
       );
     });
