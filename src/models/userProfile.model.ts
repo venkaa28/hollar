@@ -3,14 +3,16 @@ import {LinkedAccountsModel} from './linkedAccounts.model';
 
 export class UserProfile {
   uid: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phoneNumber: string;
   connections: [];
   inviteRequests: [];
-  company?: string;
-  industry?: string;
-  job?: string;
-  documents?: [];
+  company = '';
+  industry = '';
+  job = '';
+  documents: [];
   linkedAccounts: LinkedAccountsModel;
+  profilePicture: '';
 }
