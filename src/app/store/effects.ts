@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {createEffect, Actions, ofType} from "@ngrx/effects";
 import { EMPTY, Observable } from 'rxjs';
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import {map, mergeMap, catchError, tap} from 'rxjs/operators';
 import * as UserActions from './actions';
 import {FirebaseService} from "../services/firebase.service";
 import {Action} from "@ngrx/store";
@@ -21,7 +21,7 @@ export class Effects {
       ofType(UserActions.FETCH_USER),
       mergeMap(() => this.firebaseService.user$()
         .pipe(
-          map(user => ({ type: UserActions.FETCH_USER_SUCCESS, payload: user })),
+          map(user => ({ type: UserActions.FETCH_USER_SUCCESS, payload: user['user'] })),
           catchError(() => EMPTY)
         ))
     )

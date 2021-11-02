@@ -7,10 +7,10 @@ import {Observable} from "rxjs";
 import {mergeMap, switchMap, take} from "rxjs/operators";
 import {LinkedAccountsModel} from "../../../../models/linkedAccounts.model";
 
-import { Store } from '@ngrx/store';
-import * as reducer from '../../../store/reducer';
+import {select, State, Store} from '@ngrx/store';
+import * as reducer from '../../../store/userReducer';
 import * as UserActions from '../../../store/actions';
-import {UserState} from "../../../store/reducer";
+import {selectUserObs, selectUserState, UserState} from "../../../store/userReducer";
 
 @Component({
   selector: 'app-tab2',
@@ -22,31 +22,45 @@ export class Tab2Page implements OnInit {
   connectionsObservable: Observable<UserProfile[]> = null;
   connectionList: UserProfile[];
   currentUser: UserProfile;
-  currentUserObs: Observable<UserProfile>;
+  currentUserObs: Observable<any>;
 
   constructor(private firebaseService: FirebaseService, private authService: AuthService,
-              private store: Store<reducer.UserState>) {
+              private store: Store<any>) {
   }
 
   async ngOnInit() {
     this.store.dispatch(new UserActions.FetchUser());
-    // setTimeout(()=>{
+    // this.store.subscribe( (data) => {
+    //   this.currentUser = data.user;
+    // });
+    this.currentUserObs = this.store.select(selectUserObs);
+    console.log(this.currentUserObs);
+    this.currentUserObs.subscribe( (value: UserProfile) => {
+      console.log(value);
+      this.currentUser = value;
+      console.log(this.currentUser);
+    });
+    // setTimeout(() => {
+    //   this.currentUserObs = this.store.select(userStateSelector);
     //   console.log(this.currentUserObs);
     // }, 3000);
-
-    this.currentUserObs = this.store.select(reducer.userStateSelector);
-    console.log(this.currentUserObs);
-    this.store.pipe(take(2)).subscribe( (data) => {
-      console.log(data.user);
-      console.log(JSON.stringify(data));
-    });
-    this.currentUserObs.subscribe((data) => {
-      console.log(data);
-    });
+    // setTimeout(()=>{                           // <<<---using ()=> syntax
+    //   this.store.select(state => (state.user)).subscribe((data) => {
+    //     console.log(data);
+    //   });
+    //   console.log(this.currentUserObs);
+    // }, 5000);
+    // this.store.pipe(take(2)).subscribe( (data) => {
+    //   console.log(data);
+    //   console.log(JSON.stringify(data));
+    // });
+    // this.currentUserObs.subscribe((data) => {
+    //   console.log(data);
+    // });
     // console.log(this.currentUserObs.subscribe( (data) => {
     //   console.log(data);
     // }));
-    //console.log(this.store);
+    console.log(this.store);
 
 
     //fully working code

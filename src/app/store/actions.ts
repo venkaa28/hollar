@@ -11,9 +11,7 @@ export class FetchUser implements Action {
 
 export class FetchUserSuccess implements Action {
   readonly type = FETCH_USER_SUCCESS;
-  payload: UserProfile;
-  constructor(payload: UserProfile) {
-    this.payload = payload;
+  constructor(public payload: UserProfile) {
   };
 }
 export type Actions = FetchUser | FetchUserSuccess;

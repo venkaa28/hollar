@@ -5,24 +5,24 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-<!--  <ion-searchbar showClearButton="always" debounce="500"></ion-searchbar>-->
-<!--    <app-connection-card-->
-<!--                         name="{{this.currentUser.firstName | async}} {{this.currentUser.lastName | async}}"-->
-<!--                         email="{{this.currentUser.email | async}}"-->
-<!--                         phoneNumber="{{this.currentUser.phoneNumber | async}}"-->
-<!--    ></app-connection-card>-->
+  <ion-searchbar showClearButton="always" debounce="500"></ion-searchbar>
+    <app-connection-card
+                         name="{{this.currentUser.firstName}} {{this.currentUser.lastName}}"
+                         email="{{this.currentUser.email}}"
+                         phoneNumber="{{this.currentUser.phoneNumber}}"
+    ></app-connection-card>
 
 
 
-<!--  <ion-card>-->
-<!--    <ion-card-header>-->
-<!--      <ion-card-subtitle>{{this.currentUser.firstName | async}} {{this.currentUser.lastName | async}}</ion-card-subtitle>-->
-<!--      <ion-card-title>{{this.currentUser.email | async}}</ion-card-title>-->
-<!--    </ion-card-header>-->
-<!--    <ion-card-content>-->
-<!--      {{this.currentUser.phoneNumber | async}}-->
-<!--    </ion-card-content>-->
-<!--  </ion-card>-->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>{{this.currentUser.firstName }} {{this.currentUser.lastName}}</ion-card-subtitle>
+      <ion-card-title>{{this.currentUser.email}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{this.currentUser.phoneNumber}}
+    </ion-card-content>
+  </ion-card>
 
 <!--  <ion-card>-->
 <!--    <ion-item>-->

@@ -21,14 +21,14 @@ export class FirebaseService {
 
   }
 
-  user$(): Observable<UserProfile> {
+  user$(): Observable<any> {
     return this.afStore.doc<UserProfile>(`users/${firebase.auth().currentUser.uid}`).valueChanges().pipe(
-      map(user => user['user']),
-      // tap(r => {
-      //   console.groupCollapsed(`Firestore Streaming users/${firebase.auth().currentUser.uid}`);
-      //   console.log(r['user']);
-      //   console.groupEnd();
-      // }),
+      // map(user => user['user']),
+      tap(r => {
+        console.groupCollapsed(`Firestore Streaming users/${firebase.auth().currentUser.uid}`);
+        console.log(r['user']);
+        console.groupEnd();
+      }),
     );
   }
 

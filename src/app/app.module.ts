@@ -17,7 +17,7 @@ import {AuthService} from './services/auth.service';
 import firebase from 'firebase';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import {reducer} from "./store/reducer";
+import {userReducer} from "./store/userReducer";
 import { Effects } from './store/effects';
 
 
@@ -34,7 +34,7 @@ import { Effects } from './store/effects';
     AngularFireStorageModule,
     AngularFirestoreModule,
     AngularFireFunctionsModule,
-    StoreModule.forRoot({reducer}),
+    StoreModule.forRoot({user: userReducer}),
     EffectsModule.forRoot([Effects])
   ],
   providers: [

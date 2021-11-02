@@ -9,10 +9,25 @@ export class UserProfile {
   phoneNumber: string;
   connections: [];
   inviteRequests: [];
-  company = '';
-  industry = '';
-  job = '';
+  company: string;
+  industry: string;
+  job: string;
   documents: [];
   linkedAccounts: LinkedAccountsModel;
-  profilePicture: '';
+  profilePicture: string;
+
+  constructor() {
+    this.uid = '';
+    this.firstName = '';
+    this.lastName = '';
+    this.email = '';
+    this.phoneNumber = '';
+    this.company = '';
+    this.industry = '';
+    this.linkedAccounts = new LinkedAccountsModel();
+    this.profilePicture = '';
+    this.documents = [];
+    this.connections = [];
+    this.inviteRequests = [];
+  }
 }
