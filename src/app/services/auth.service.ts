@@ -5,7 +5,7 @@ import {UserProfile} from '../../models/userProfile.model';
 import {FirebaseService} from './firebase.service';
 import {Observable} from 'rxjs';
 import {LinkedAccountsModel} from '../../models/linkedAccounts.model';
-import {AngularFirestore} from "@angular/fire/firestore";
+import {AngularFirestore} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -19,17 +19,17 @@ export class AuthService {
               private firebaseService: FirebaseService,
               private afStore: AngularFirestore) {
 
-    this.afAuth.onAuthStateChanged( async (firebaseUser) => {
-      if (firebaseUser) {
-        this.userObservable = await this.afStore.doc<UserProfile>('users/' + firebaseUser.uid).valueChanges();
-        this.userObservable.subscribe((data) => {
-          this.user = data;
-        });
-      } else {
-        this.userObservable = null;
-        this.user = null;
-      }
-    });
+    // this.afAuth.onAuthStateChanged( async (firebaseUser) => {
+    //   if (firebaseUser) {
+    //     this.userObservable = await this.afStore.doc<UserProfile>('users/' + firebaseUser.uid).valueChanges();
+    //     this.userObservable.subscribe((data) => {
+    //       this.user = data;
+    //     });
+    //   } else {
+    //     this.userObservable = null;
+    //     this.user = null;
+    //   }
+    // });
   }
 
   async getUserObservable() {
@@ -70,7 +70,7 @@ export class AuthService {
               documents: [],
               profilePicture: ''
             };
-            await this.firebaseService.writeNewUser(newUser);
+            //await this.firebaseService.writeNewUser(newUser);
             resolve(res);
           },
           err => reject(err)
@@ -99,16 +99,16 @@ doLogin(email, password){
   }
 
   doLogout(){
-    return new Promise((resolve, reject) => {
-      this.afAuth.signOut()
-        .then(res => {
-          this.firebaseService.unsubscribeOnLogOut();
-          resolve(res);
-        }, ).catch((error) => {
-        console.log(error);
-        reject();
-      });
-    });
+    // return new Promise((resolve, reject) => {
+    //   this.afAuth.signOut()
+    //     .then(res => {
+    //       this.firebaseService.unsubscribeOnLogOut();
+    //       resolve(res);
+    //     }, ).catch((error) => {
+    //     console.log(error);
+    //     reject();
+    //   });
+    // });
   }
 
 }

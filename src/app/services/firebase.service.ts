@@ -5,15 +5,16 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFirestore} from "@angular/fire/firestore";
 import {UserProfile} from "../../models/userProfile.model";
 import {Observable} from "rxjs";
-import {tap} from "rxjs/operators";
+import {map, tap} from "rxjs/operators";
+import * as UserActions from "../store/actions";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
 
-  public connectionsObservable: Observable<Array<UserProfile>> | null = null;
-  private snapshotChangesSubscription: any;
+  public connectionsObservable: Observable<UserProfile[]>;
+  public userObservable: Observable<UserProfile>;
 
   constructor(private afAuth: AngularFireAuth, private afDB: AngularFireDatabase,
               private afStore: AngularFirestore) {
@@ -22,11 +23,12 @@ export class FirebaseService {
 
   user$(): Observable<UserProfile> {
     return this.afStore.doc<UserProfile>(`users/${firebase.auth().currentUser.uid}`).valueChanges().pipe(
-      tap(r => {
-        console.groupCollapsed(`Firestore Streaming users/${firebase.auth().currentUser.uid}`);
-        console.log(r);
-        console.groupEnd();
-      }),
+      map(user => user['user']),
+      // tap(r => {
+      //   console.groupCollapsed(`Firestore Streaming users/${firebase.auth().currentUser.uid}`);
+      //   console.log(r['user']);
+      //   console.groupEnd();
+      // }),
     );
   }
 

@@ -4,8 +4,13 @@ import {AuthService} from "../../../services/auth.service";
 import {UserProfile} from "../../../../models/userProfile.model";
 import {user} from "rxfire/auth";
 import {Observable} from "rxjs";
-import {mergeMap, switchMap} from "rxjs/operators";
+import {mergeMap, switchMap, take} from "rxjs/operators";
 import {LinkedAccountsModel} from "../../../../models/linkedAccounts.model";
+
+import { Store } from '@ngrx/store';
+import * as reducer from '../../../store/reducer';
+import * as UserActions from '../../../store/actions';
+import {UserState} from "../../../store/reducer";
 
 @Component({
   selector: 'app-tab2',
@@ -17,31 +22,52 @@ export class Tab2Page implements OnInit {
   connectionsObservable: Observable<UserProfile[]> = null;
   connectionList: UserProfile[];
   currentUser: UserProfile;
+  currentUserObs: Observable<UserProfile>;
 
-  constructor(private firebaseService: FirebaseService, private authService: AuthService) {
-    //this.currentUser = this.authService.getUser();
+  constructor(private firebaseService: FirebaseService, private authService: AuthService,
+              private store: Store<reducer.UserState>) {
   }
 
   async ngOnInit() {
-    //fully working code
-    (await this.authService.getUserObservable()).pipe(
-      mergeMap( async userData => {
-        console.log(userData);
-        this.currentUser = userData['user'];
-        console.log(this.currentUser);
-        const connects = userData['user'].connections;
-        //console.log(connects);
-        //console.log(userData['user'].connections);
-        return this.firebaseService.getConnections(connects);
-      })
-    ).subscribe( (connections) => {
-      this.connectionsObservable = connections;
-      connections.subscribe( (data) => {
-          this.connectionList = data;
-          //console.log(this.connectionList);
-      }
-      );
+    this.store.dispatch(new UserActions.FetchUser());
+    // setTimeout(()=>{
+    //   console.log(this.currentUserObs);
+    // }, 3000);
+
+    this.currentUserObs = this.store.select(reducer.userStateSelector);
+    console.log(this.currentUserObs);
+    this.store.pipe(take(2)).subscribe( (data) => {
+      console.log(data.user);
+      console.log(JSON.stringify(data));
     });
+    this.currentUserObs.subscribe((data) => {
+      console.log(data);
+    });
+    // console.log(this.currentUserObs.subscribe( (data) => {
+    //   console.log(data);
+    // }));
+    //console.log(this.store);
+
+
+    //fully working code
+    // (await this.authService.getUserObservable()).pipe(
+    //   mergeMap( async userData => {
+    //     console.log(userData);
+    //     this.currentUser = userData['user'];
+    //     console.log(this.currentUser);
+    //     const connects = userData['user'].connections;
+    //     //console.log(connects);
+    //     //console.log(userData['user'].connections);
+    //     return this.firebaseService.getConnections(connects);
+    //   })
+    // ).subscribe( (connections) => {
+    //   this.connectionsObservable = connections;
+    //   connections.subscribe( (data) => {
+    //       this.connectionList = data;
+    //       //console.log(this.connectionList);
+    //   }
+    //   );
+    // });
   }
 
   connections: Array<UserProfile> = [

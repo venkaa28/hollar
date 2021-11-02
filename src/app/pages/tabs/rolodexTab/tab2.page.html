@@ -5,22 +5,22 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-searchbar showClearButton="always" debounce="500"></ion-searchbar>
-    <app-connection-card *ngFor="let connection of this.connections;"
-                         name="{{connection.firstName}} {{connection.lastName}}"
-                         email="{{connection.email}}"
-                         phoneNumber="{{connection.phoneNumber}}"
-    ></app-connection-card>
+<!--  <ion-searchbar showClearButton="always" debounce="500"></ion-searchbar>-->
+<!--    <app-connection-card-->
+<!--                         name="{{this.currentUser.firstName | async}} {{this.currentUser.lastName | async}}"-->
+<!--                         email="{{this.currentUser.email | async}}"-->
+<!--                         phoneNumber="{{this.currentUser.phoneNumber | async}}"-->
+<!--    ></app-connection-card>-->
+
 
 
 <!--  <ion-card>-->
 <!--    <ion-card-header>-->
-<!--      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>-->
-<!--      <ion-card-title>Card Title</ion-card-title>-->
+<!--      <ion-card-subtitle>{{this.currentUser.firstName | async}} {{this.currentUser.lastName | async}}</ion-card-subtitle>-->
+<!--      <ion-card-title>{{this.currentUser.email | async}}</ion-card-title>-->
 <!--    </ion-card-header>-->
 <!--    <ion-card-content>-->
-<!--      Keep close to Nature's heart... and break clear away, once in awhile,-->
-<!--      and climb a mountain or spend a week in the woods. Wash your spirit clean.-->
+<!--      {{this.currentUser.phoneNumber | async}}-->
 <!--    </ion-card-content>-->
 <!--  </ion-card>-->
 
