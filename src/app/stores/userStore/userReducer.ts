@@ -19,7 +19,6 @@ export const userReducer = (state = initialUserState,
      };
    }
    case UserActions.FETCH_USER_SUCCESS: {
-     console.log(action.payload);
      return {
        user: action.payload
      };

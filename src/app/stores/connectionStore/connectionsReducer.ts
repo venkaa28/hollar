@@ -3,7 +3,7 @@ import * as ConnectionsActions from './connectionsActions';
 import {ActionReducerMap, createFeatureSelector, createReducer, createSelector, on} from "@ngrx/store";
 
 export interface ConnectionsState {
-  connections: UserProfile[];
+  connections: [];
 }
 
 const initialConnectionsState: ConnectionsState = {
@@ -11,7 +11,7 @@ const initialConnectionsState: ConnectionsState = {
 };
 
 export const connectionReducer = (state = initialConnectionsState,
-                            action: ConnectionsActions.UserActions ): ConnectionsState => {
+                            action: ConnectionsActions.ConnectionsActions ): ConnectionsState => {
   switch (action.type) {
     case ConnectionsActions.FETCH_CONNECTIONS: {
       return {
@@ -19,7 +19,6 @@ export const connectionReducer = (state = initialConnectionsState,
       };
     }
     case ConnectionsActions.FETCH_CONNECTIONS_SUCCESS: {
-      console.log(action.payload);
       return {
         connections: action.payload
       };

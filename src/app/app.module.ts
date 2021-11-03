@@ -20,6 +20,7 @@ import { EffectsModule } from '@ngrx/effects';
 import {userReducer} from "./stores/userStore/userReducer";
 import {connectionReducer} from "./stores/connectionStore/connectionsReducer";
 import { UserEffects } from './stores/userStore/userEffects';
+import { ConnectionsEffects } from './stores/connectionStore/connectionsEffects';
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import { UserEffects } from './stores/userStore/userEffects';
       user: userReducer,
       connections: connectionReducer
     }),
-    EffectsModule.forRoot([UserEffects])
+    EffectsModule.forRoot([UserEffects, ConnectionsEffects])
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

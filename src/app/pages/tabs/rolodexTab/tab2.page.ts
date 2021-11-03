@@ -31,46 +31,25 @@ export class Tab2Page implements OnInit {
   }
 
   async ngOnInit() {
-    // this.store.dispatch(new UserActions.FetchUser());
-    // this.currentUserObs = this.store.select(selectUserObs);
-    // console.log(this.currentUserObs);
-    // this.currentUserObs.subscribe( (value: UserProfile) => {
-    //   console.log(value);
-    //   this.currentUser = value;
-    //   console.log(this.currentUser);
-    //   //might have to merge map this! right here to avoid the concurrent observable issue
-    //   if(this.currentUser.connections.length > 0){
-    //     this.store.dispatch(new ConnectionActions.FetchConnections(this.currentUser.connections));
-    //     this.connectionsObservable = this.store.select(selectConnectionsObs);
-    //     console.log(this.connectionsObservable);
-    //   }
-    // });
-    //
-    // console.log(this.store);
-
     this.store.dispatch(new UserActions.FetchUser());
     this.currentUserObs = this.store.select(selectUserObs);
-    console.log(this.currentUserObs);
-    this.currentUserObs.pipe(
-      mergeMap((value: UserProfile) => {
-        console.log(value);
-        this.currentUser = value;
-        console.log(this.currentUser);
-        if (this.currentUser.connections.length >0){
-          this.store.dispatch(new ConnectionActions.FetchConnections(this.currentUser.connections));
-          return this.store.select(selectConnectionsObs);
-        }
+    this.currentUserObs.subscribe( (value: UserProfile) => {
+      this.currentUser = value;
+      if(this.currentUser && this.currentUser.connections.length >0 ) {
+        this.store.dispatch(new ConnectionActions.FetchConnections(this.currentUser.connections));
+        this.connectionsObservable = this.store.select(selectConnectionsObs);
+        this.connectionsObservable.subscribe((value) => {
+          this.connectionList = value;
+        });
       }
-    )).subscribe( (value) => {
-      this.connectionsObservable = value;
-      console.log(this.connectionsObservable);
-      this.connectionsObservable.subscribe( (data) => {
-        this.connectionList = data;
-        console.log(this.connectionList);
-      });
     });
+  }
+
+  dispatchConnections(){
 
   }
+
+
 
   connections: Array<UserProfile> = [
      {

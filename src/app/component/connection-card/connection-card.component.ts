@@ -7,29 +7,12 @@ import {UserProfile} from "../../../models/userProfile.model";
   templateUrl: './connection-card.component.html',
   styleUrls: ['./connection-card.component.scss'],
 })
-export class ConnectionCardComponent implements OnInit, OnChanges {
-  @Input() name: string;
-  @Input() email: string;
-  @Input() phoneNumber: string;
-  @Input() user: Observable<UserProfile>;
-  userData: UserProfile;
-  // @Input() company: string;
-  // @Input() job: string;
-  // Add more inputs
+export class ConnectionCardComponent implements OnInit {
 
+  @Input() user: UserProfile;
   constructor() { }
 
   ngOnInit() {
-    // this.user.subscribe((data) => {
-    //   this.userData =data;
-    // });
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // if (changes.firstName) {
-    //   // deal with asynchronous Observable result
-    //   this.name = changes.firstName.currentValue;
-    // }
   }
 
 }
