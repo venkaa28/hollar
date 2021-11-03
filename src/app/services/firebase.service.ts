@@ -6,7 +6,7 @@ import {AngularFirestore} from "@angular/fire/firestore";
 import {UserProfile} from "../../models/userProfile.model";
 import {Observable} from "rxjs";
 import {map, tap} from "rxjs/operators";
-import * as UserActions from "../store/actions";
+import * as UserActions from "../stores/userStore/userActions";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,6 @@ export class FirebaseService {
 
   user$(): Observable<any> {
     return this.afStore.doc<UserProfile>(`users/${firebase.auth().currentUser.uid}`).valueChanges().pipe(
-      // map(user => user['user']),
       tap(r => {
         console.groupCollapsed(`Firestore Streaming users/${firebase.auth().currentUser.uid}`);
         console.log(r['user']);

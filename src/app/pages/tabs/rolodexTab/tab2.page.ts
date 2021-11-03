@@ -8,9 +8,11 @@ import {mergeMap, switchMap, take} from "rxjs/operators";
 import {LinkedAccountsModel} from "../../../../models/linkedAccounts.model";
 
 import {select, State, Store} from '@ngrx/store';
-import * as reducer from '../../../store/userReducer';
-import * as UserActions from '../../../store/actions';
-import {selectUserObs, selectUserState, UserState} from "../../../store/userReducer";
+import * as reducer from '../../../stores/userStore/userReducer';
+import * as UserActions from '../../../stores/userStore/userActions';
+import * as ConnectionActions from '../../../stores/connectionStore/connectionsActions';
+import {selectConnectionsObs} from "../../../stores/connectionStore/connectionsReducer";
+import {selectUserObs, selectUserState, UserState} from "../../../stores/userStore/userReducer";
 
 @Component({
   selector: 'app-tab2',
@@ -19,7 +21,7 @@ import {selectUserObs, selectUserState, UserState} from "../../../store/userRedu
 })
 export class Tab2Page implements OnInit {
 
-  connectionsObservable: Observable<UserProfile[]> = null;
+  connectionsObservable: Observable<any[]>;
   connectionList: UserProfile[];
   currentUser: UserProfile;
   currentUserObs: Observable<any>;
@@ -29,59 +31,45 @@ export class Tab2Page implements OnInit {
   }
 
   async ngOnInit() {
-    this.store.dispatch(new UserActions.FetchUser());
-    // this.store.subscribe( (data) => {
-    //   this.currentUser = data.user;
+    // this.store.dispatch(new UserActions.FetchUser());
+    // this.currentUserObs = this.store.select(selectUserObs);
+    // console.log(this.currentUserObs);
+    // this.currentUserObs.subscribe( (value: UserProfile) => {
+    //   console.log(value);
+    //   this.currentUser = value;
+    //   console.log(this.currentUser);
+    //   //might have to merge map this! right here to avoid the concurrent observable issue
+    //   if(this.currentUser.connections.length > 0){
+    //     this.store.dispatch(new ConnectionActions.FetchConnections(this.currentUser.connections));
+    //     this.connectionsObservable = this.store.select(selectConnectionsObs);
+    //     console.log(this.connectionsObservable);
+    //   }
     // });
+    //
+    // console.log(this.store);
+
+    this.store.dispatch(new UserActions.FetchUser());
     this.currentUserObs = this.store.select(selectUserObs);
     console.log(this.currentUserObs);
-    this.currentUserObs.subscribe( (value: UserProfile) => {
-      console.log(value);
-      this.currentUser = value;
-      console.log(this.currentUser);
+    this.currentUserObs.pipe(
+      mergeMap((value: UserProfile) => {
+        console.log(value);
+        this.currentUser = value;
+        console.log(this.currentUser);
+        if (this.currentUser.connections.length >0){
+          this.store.dispatch(new ConnectionActions.FetchConnections(this.currentUser.connections));
+          return this.store.select(selectConnectionsObs);
+        }
+      }
+    )).subscribe( (value) => {
+      this.connectionsObservable = value;
+      console.log(this.connectionsObservable);
+      this.connectionsObservable.subscribe( (data) => {
+        this.connectionList = data;
+        console.log(this.connectionList);
+      });
     });
-    // setTimeout(() => {
-    //   this.currentUserObs = this.store.select(userStateSelector);
-    //   console.log(this.currentUserObs);
-    // }, 3000);
-    // setTimeout(()=>{                           // <<<---using ()=> syntax
-    //   this.store.select(state => (state.user)).subscribe((data) => {
-    //     console.log(data);
-    //   });
-    //   console.log(this.currentUserObs);
-    // }, 5000);
-    // this.store.pipe(take(2)).subscribe( (data) => {
-    //   console.log(data);
-    //   console.log(JSON.stringify(data));
-    // });
-    // this.currentUserObs.subscribe((data) => {
-    //   console.log(data);
-    // });
-    // console.log(this.currentUserObs.subscribe( (data) => {
-    //   console.log(data);
-    // }));
-    console.log(this.store);
 
-
-    //fully working code
-    // (await this.authService.getUserObservable()).pipe(
-    //   mergeMap( async userData => {
-    //     console.log(userData);
-    //     this.currentUser = userData['user'];
-    //     console.log(this.currentUser);
-    //     const connects = userData['user'].connections;
-    //     //console.log(connects);
-    //     //console.log(userData['user'].connections);
-    //     return this.firebaseService.getConnections(connects);
-    //   })
-    // ).subscribe( (connections) => {
-    //   this.connectionsObservable = connections;
-    //   connections.subscribe( (data) => {
-    //       this.connectionList = data;
-    //       //console.log(this.connectionList);
-    //   }
-    //   );
-    // });
   }
 
   connections: Array<UserProfile> = [

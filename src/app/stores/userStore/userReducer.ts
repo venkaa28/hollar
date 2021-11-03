@@ -1,5 +1,5 @@
-import {UserProfile} from "../../models/userProfile.model";
-import * as UserActions from './actions';
+import {UserProfile} from "../../../models/userProfile.model";
+import * as UserActions from './userActions';
 import {ActionReducerMap, createFeatureSelector, createReducer, createSelector, on} from "@ngrx/store";
 
 export interface UserState {
@@ -11,7 +11,7 @@ const initialUserState: UserState = {
 };
 
 export const userReducer = (state = initialUserState,
-                            action: UserActions.Actions ): UserState => {
+                            action: UserActions.UserActions ): UserState => {
  switch (action.type) {
    case UserActions.FETCH_USER: {
      return {

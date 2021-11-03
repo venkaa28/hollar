@@ -12,6 +12,11 @@
                          phoneNumber="{{this.currentUser.phoneNumber}}"
     ></app-connection-card>
 
+  <app-connection-card *ngFor="let connection of this.connectionList"
+                       name="{{connection.firstName}} {{connection.lastName}}"
+                       email="{{connection.email}}"
+                       phoneNumber="{{connection.phoneNumber}}"
+  ></app-connection-card>
 
 
   <ion-card>

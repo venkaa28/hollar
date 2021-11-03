@@ -2,20 +2,15 @@ import { Injectable } from '@angular/core';
 import {createEffect, Actions, ofType} from "@ngrx/effects";
 import { EMPTY, Observable } from 'rxjs';
 import {map, mergeMap, catchError, tap} from 'rxjs/operators';
-import * as UserActions from './actions';
-import {FirebaseService} from "../services/firebase.service";
+import * as UserActions from './userActions';
+import {FirebaseService} from "../../services/firebase.service";
 import {Action} from "@ngrx/store";
 
 
 
 
 @Injectable()
-export class Effects {
-
-  // fetchUser$: Observable<Action> = this.actions$.ofType(UserActions.FetchUser) // filtering actions
-  //   .switchMap(() => this.firebaseService.items
-  //     .do((payload) => new actions.FetchEventsSuccess(payload))
-  //   );
+export class UserEffects {
 
   fetchUser$ = createEffect(() => this.actions$.pipe(
       ofType(UserActions.FETCH_USER),
