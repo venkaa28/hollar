@@ -4,8 +4,8 @@
       <ion-icon size="large" name="create"></ion-icon>
       Edit
     </ion-button>
-    <ion-button slot = "end" color="light">
-      <ion-icon size="large" name="log-out"></ion-icon>
+    <ion-button slot = "end" color="light" (click)="logout()">
+      <ion-icon size="large" name="log-out" ></ion-icon>
       Logout
     </ion-button>
     <ion-title class="ion-text-center">
@@ -29,9 +29,9 @@
   </div>
   <div class="card-body">
     <div class="user-meta ion-text-center">
-      <h3 class="name">Roger Federer</h3>
-      <h5 class="job">Job</h5>
-      <h6>Company</h6>
+      <h3 class="name"> {{this.currentUser.firstName}} {{this.currentUser.lastName}}</h3>
+      <h5 class="job">Job: {{this.currentUser.job}}</h5>
+      <h6>Company: {{this.currentUser.company}}</h6>
     </div>
     <ion-grid class="ion-padding">
       <ion-row>

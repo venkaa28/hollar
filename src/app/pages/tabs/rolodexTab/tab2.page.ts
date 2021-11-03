@@ -45,10 +45,6 @@ export class Tab2Page implements OnInit {
     });
   }
 
-  dispatchConnections(){
-
-  }
-
 
 
   connections: Array<UserProfile> = [
