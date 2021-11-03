@@ -1,4 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
+import {Observable} from "rxjs";
+import {UserProfile} from "../../../models/userProfile.model";
 
 @Component({
   selector: 'app-connection-card',
@@ -6,15 +8,11 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./connection-card.component.scss'],
 })
 export class ConnectionCardComponent implements OnInit {
-  @Input() name: string;
-  @Input() email: string;
-  @Input() phoneNumber: string;
-  // @Input() company: string;
-  // @Input() job: string;
-  // Add more inputs
 
+  @Input() user: UserProfile;
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
 }

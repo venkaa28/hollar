@@ -5,39 +5,19 @@ import {UserProfile} from '../../models/userProfile.model';
 import {FirebaseService} from './firebase.service';
 import {Observable} from 'rxjs';
 import {LinkedAccountsModel} from '../../models/linkedAccounts.model';
-import {AngularFirestore} from "@angular/fire/firestore";
+import {AngularFirestore} from '@angular/fire/firestore';
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  public userObservable: Observable<UserProfile> | null = null;
-  public user: UserProfile;
 
   constructor(private afAuth: AngularFireAuth,
               private firebaseService: FirebaseService,
-              private afStore: AngularFirestore) {
-
-    this.afAuth.onAuthStateChanged( async (firebaseUser) => {
-      if (firebaseUser) {
-        this.userObservable = await this.afStore.doc<UserProfile>('users/' + firebaseUser.uid).valueChanges();
-        this.userObservable.subscribe((data) => {
-          this.user = data;
-        });
-      } else {
-        this.userObservable = null;
-        this.user = null;
-      }
-    });
-  }
-
-  getUserObservable() {
-    return this.userObservable;
-  }
-
-  getUser(){
-    return this.user;
+              private afStore: AngularFirestore,
+              private router: Router) {
   }
 
   //change to accept a user model
@@ -92,8 +72,8 @@ doLogin(email, password){
   doLogout(){
     return new Promise((resolve, reject) => {
       this.afAuth.signOut()
-        .then(res => {
-          this.firebaseService.unsubscribeOnLogOut();
+        .then(async res => {
+          await this.router.navigateByUrl('/login', {replaceUrl: true});
           resolve(res);
         }, ).catch((error) => {
         console.log(error);
