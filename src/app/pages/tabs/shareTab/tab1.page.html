@@ -22,7 +22,7 @@
     <h1>Use Your NFC Card To</h1>
   </ion-text>
   <ion-row style="height: 20px"></ion-row>
-  <ion-button expand="block">Send Profile to Card</ion-button>
+  <ion-button (click)="onWriteClick()" expand="block">Send Profile to Card</ion-button>
   <ion-row style="height: 20px"></ion-row>
-  <ion-button expand="block">Read Profile from Card</ion-button>
+  <ion-button (click)="onReadClick()" expand="block">Read Profile from Card</ion-button>
 </ion-content>

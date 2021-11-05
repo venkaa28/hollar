@@ -23,6 +23,7 @@ export class Tab1Page {
       }).subscribe((event) => {
         console.log('received ndef message. data in tag is: ', event.tag);
         console.log('payload content is: ', this.nfc.bytesToString(event.tag.ndefMessage[0].payload));
+        // ^^^ parse URI and send http request to get profile
         console.log('decoded tag id: ', this.nfc.bytesToHexString(event.tag.id));
         // const message = [this.ndef.textRecord('hello, world')];
         // this.nfc.share(message);
@@ -39,7 +40,7 @@ export class Tab1Page {
 
   }
 
-  onWriteClick(nfc) {
+  onWriteClick() {
     this.nfc.addNdefListener(() => {
       console.log('successfully attached ndef listener');
     }, (err) => {
