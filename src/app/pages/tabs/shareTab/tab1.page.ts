@@ -48,7 +48,7 @@ export class Tab1Page {
       // writing to tag using android device
       if (this.platform.is('android')) {
         const message = [];
-        const tnf = this.ndef.TNF_EXTERNAL_TYPE;
+        const tnf = this.ndef.TNF_WELL_KNOWN;
         const recordType = 'android.com:pkg';
         const payload = 'com.jwsoft.nfcactionlauncher'; // change to our Hollar AAR (android application record)
         const record = this.ndef.record(tnf, recordType, [], payload);
@@ -57,12 +57,12 @@ export class Tab1Page {
       } else if (this.platform.is('ios')) {
         // writing to tag using ios device
         // same code as android because nfc.write automatically starts a new scanning session and writes to scanned tag
-        const message = [];
-        const tnf = this.ndef.TNF_EXTERNAL_TYPE;
+        const message = [this.ndef.textRecord('hello ryan brumm')];
+        /*const tnf = this.ndef.TNF_EXTERNAL_TYPE;
         const recordType = 'android.com:pkg';
         const payload = 'com.jwsoft.nfcactionlauncher'; // change to our Hollar AAR (android application record)
         const record = this.ndef.record(tnf, recordType, [], payload);
-        message.push(record);
+        message.push(record);*/
         this.nfc.write(message).then(r => console.log(r));
 
       }
