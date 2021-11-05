@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import {NFC, Ndef} from "@ionic-native/nfc/ngx";
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -40,10 +41,12 @@ import { ConnectionsEffects } from './stores/connectionStore/connectionsEffects'
       user: userReducer,
       connections: connectionReducer
     }),
-    EffectsModule.forRoot([UserEffects, ConnectionsEffects])
+    EffectsModule.forRoot([UserEffects, ConnectionsEffects]),
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    NFC,
+    Ndef
   ],
   bootstrap: [AppComponent],
 })
