@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 import { Platform } from '@ionic/angular';
-// might need to downgrade to import { NFC, NDef } from '@ionic-native/nfc'
+// might need to downgrade to import { NFC, NDef } from '@ionic-native/nfc/ngx'
 
 @Component({
   selector: 'app-tab1',
@@ -28,6 +28,7 @@ export class Tab1Page {
       //   // this.nfc.share(message);
       //   // console.log(JSON.stringify(tag));
       // }, (err) => console.log(err));
+
     } else if (this.platform.is('ios')) {
       // read tag using ios device
       console.log("this is an ios device");
@@ -40,7 +41,7 @@ export class Tab1Page {
 
   }
 
-  onWriteClick(nfc) {
+  onWriteClick() {
     this.nfc.addNdefListener(() => {
       console.log('successfully attached ndef listener');
     }, (err) => {
