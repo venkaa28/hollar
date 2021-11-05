@@ -1,17 +1,119 @@
-<ion-header [translucent]="true">
+<ion-header translucent no-border>
   <ion-toolbar>
-    <ion-title>
+    <ion-button slot = "start" color="light">
+      <ion-icon size="large" name="create"></ion-icon>
+      Edit
+    </ion-button>
+    <ion-button slot = "end" color="light" (click)="logout()">
+      <ion-icon size="large" name="log-out" ></ion-icon>
+      Logout
+    </ion-button>
+    <ion-title class="ion-text-center">
       Profile
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+<!--  <ion-toolbar translucent no-border>-->
+<!--    <ion-label color="secondary">Public</ion-label>-->
+<!--    <ion-toggle slot = "start" color="secondary"></ion-toggle>-->
+<!--    <ion-label slot = "end" color="secondary">Connections: </ion-label>-->
+<!--  </ion-toolbar>-->
+  <div class="card">
+    <div class="header">
+      <div class="avatar">
+        <img alt="" src="../../../../assets/profileavatar.jpg">
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="user-meta ion-text-center">
+      <h3 class="name"> {{this.currentUser.firstName}} {{this.currentUser.lastName}}</h3>
+      <h5 class="job">Job: {{this.currentUser.job}}</h5>
+      <h6>Company: {{this.currentUser.company}}</h6>
+    </div>
+    <ion-grid class="ion-padding">
+      <ion-row>
+        <ion-col>
+          <ion-button color="secondary">
+            <ion-icon size="large" name="logo-twitter"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button color="secondary">
+            <ion-icon size="large" name="logo-linkedin"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button color="secondary">
+            <ion-icon size="large" name="logo-github"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button color = "secondary">
+            <ion-icon size="large" name="logo-instagram"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button color="secondary">
+            <ion-icon size="large" name="information-circle"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button color="secondary">
+            <ion-icon size="large" name="document"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 
-  <app-explore-container name="Profile page"></app-explore-container>
+<!--  <ion-grid>-->
+<!--    <ion-row><ion-col></ion-col></ion-row>-->
+<!--    <ion-row><ion-col></ion-col></ion-row>-->
+<!--    <ion-row>-->
+<!--      <ion-col></ion-col>-->
+<!--      <ion-col>-->
+<!--        <ion-icon size="large" name="contact"></ion-icon>-->
+<!--      </ion-col>-->
+<!--      <ion-col></ion-col>-->
+<!--    </ion-row>-->
+<!--    <ion-row>-->
+<!--      <ion-col>-->
+<!--        <ion-button>-->
+<!--          <ion-icon size="large" name="logo-twitter"></ion-icon>-->
+<!--        </ion-button>-->
+<!--      </ion-col>-->
+<!--      <ion-col>-->
+<!--        <ion-button>-->
+<!--          <ion-icon size="large" name="logo-linkedin"></ion-icon>-->
+<!--        </ion-button>-->
+<!--      </ion-col>-->
+<!--      <ion-col>-->
+<!--        <ion-button>-->
+<!--          <ion-icon size="large" name="logo-github"></ion-icon>-->
+<!--        </ion-button>-->
+<!--      </ion-col>-->
+<!--    </ion-row>-->
+<!--    <ion-row>-->
+<!--      <ion-col>-->
+<!--        <ion-button>-->
+<!--          <ion-icon size="large" name="logo-instagram"></ion-icon>-->
+<!--        </ion-button>-->
+<!--      </ion-col>-->
+<!--      <ion-col>-->
+<!--        <ion-button>-->
+<!--          <ion-icon size="large" name="information-circle"></ion-icon>-->
+<!--        </ion-button>-->
+<!--      </ion-col>-->
+<!--      <ion-col>-->
+<!--        <ion-button>-->
+<!--          <ion-icon size="large" name="document"></ion-icon>-->
+<!--        </ion-button>-->
+<!--      </ion-col>-->
+<!--    </ion-row>-->
+<!--  </ion-grid>-->
 </ion-content>

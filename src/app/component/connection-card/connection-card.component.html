@@ -1,13 +1,13 @@
 
-<ion-item href="tabs/tab3">
+<ion-item >
   <ion-avatar slot="start">
     <img src="assets/icon/profilePicPlaceholder.png">
   </ion-avatar>
   <ion-label>
-    <h1>{{ name }}</h1>
-    <h2 slot="start">UW-Madison - {{ email }} - {{ phoneNumber }}</h2>
+    <h1>{{ this.user?.firstName }} {{ this.user?.lastName }}</h1>
+    <h2 slot="start">UW-Madison - {{ this.user?.email }} - {{ this.user?.phoneNumber }}</h2>
     <p>
-      Hello! This is my short summary/description of me and my projects. I am currently studying CS at UW-Madison. <br> Contact me at ..........@wisc.edu!
+      This is my short summary/description of me and my projects.
       <br> Also check out my socials, github, and work experience on my profile!
     </p>
   </ion-label>

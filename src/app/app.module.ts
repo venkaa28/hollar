@@ -15,6 +15,12 @@ import {AngularFireFunctionsModule} from '@angular/fire/functions';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {AuthService} from './services/auth.service';
 import firebase from 'firebase';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import {userReducer} from "./stores/userStore/userReducer";
+import {connectionReducer} from "./stores/connectionStore/connectionsReducer";
+import { UserEffects } from './stores/userStore/userEffects';
+import { ConnectionsEffects } from './stores/connectionStore/connectionsEffects';
 
 
 @NgModule({
@@ -29,7 +35,12 @@ import firebase from 'firebase';
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     AngularFirestoreModule,
-    AngularFireFunctionsModule
+    AngularFireFunctionsModule,
+    StoreModule.forRoot({
+      user: userReducer,
+      connections: connectionReducer
+    }),
+    EffectsModule.forRoot([UserEffects, ConnectionsEffects])
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
