@@ -44,9 +44,13 @@ export class Tab1Page {
   onWriteClick() {
     this.nfc.addNdefListener(() => {
       console.log('successfully attached ndef listener');
+      const message = [this.ndef.textRecord('hello ryan brumm')];
+      console.log(message);
+      this.nfc.write(message).then(r => console.log(r));
     }, (err) => {
       console.log('error attaching ndef listener', err);
     }).subscribe((event) => {
+      console.log("succesfully subscribed to ndef listener");
       // writing to tag using android device
       if (this.platform.is('android')) {
         // const message = [];
@@ -60,6 +64,8 @@ export class Tab1Page {
         // writing to tag using ios device
         // same code as android because nfc.write automatically starts a new scanning session and writes to scanned tag
         const message = [this.ndef.textRecord('hello ryan brumm')];
+        console.log(message);
+        console.log("trying to write to an nfc card");
         /*const tnf = this.ndef.TNF_EXTERNAL_TYPE;
         const recordType = 'android.com:pkg';
         const payload = 'com.jwsoft.nfcactionlauncher'; // change to our Hollar AAR (android application record)

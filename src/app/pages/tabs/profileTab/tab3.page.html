@@ -36,24 +36,24 @@
     <ion-grid class="ion-padding">
       <ion-row>
         <ion-col>
-          <ion-button color="secondary">
+          <ion-button *ngIf="currentUser.linkedAccounts.twitter !== ''" href="{{this.currentUser.linkedAccounts.twitter}}" color="secondary">
             <ion-icon size="large" name="logo-twitter"></ion-icon>
           </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button color="secondary">
-            <ion-icon size="large" name="logo-linkedin"></ion-icon>
+          <ion-button *ngIf="currentUser.linkedAccounts.linkedin !== ''" href="{{this.currentUser.linkedAccounts.linkedin}}" color="secondary">
+            <ion-icon  size="large" name="logo-linkedin"></ion-icon>
           </ion-button>
         </ion-col>
         <ion-col>
-          <ion-button color="secondary">
+          <ion-button *ngIf="currentUser.linkedAccounts.github !== ''" href="{{this.currentUser.linkedAccounts.github}}" color="secondary">
             <ion-icon size="large" name="logo-github"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-button color = "secondary">
+          <ion-button *ngIf="currentUser.linkedAccounts.instagram !== ''" href="{{this.currentUser.linkedAccounts.instagram}}" color = "secondary">
             <ion-icon size="large" name="logo-instagram"></ion-icon>
           </ion-button>
         </ion-col>
