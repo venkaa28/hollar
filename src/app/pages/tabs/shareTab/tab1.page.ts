@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 import { Platform } from '@ionic/angular';
-// might need to downgrade to import { NFC, NDef } from '@ionic-native/nfc'
+// might need to downgrade to import { NFC, NDef } from '@ionic-native/nfc/ngx'
 
 @Component({
   selector: 'app-tab1',
