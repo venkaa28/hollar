@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
 import {Observable} from "rxjs";
-import {UserProfile} from "../../../models/userProfile.model";
+import {UserProfile} from '../../../models/userProfile.model';
 
 @Component({
   selector: 'app-connection-card',
