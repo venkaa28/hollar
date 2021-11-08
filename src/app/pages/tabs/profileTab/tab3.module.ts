@@ -10,14 +10,17 @@ import { Tab3PageRoutingModule } from './tab3-routing.module';
 import { ProfileCardComponent } from '../../../component/profile-card/profile-card.component';
 
 @NgModule({
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    ExploreContainerComponentModule,
-    RouterModule.forChild([{ path: '', component: Tab3Page }]),
-    Tab3PageRoutingModule,
-  ],
-  declarations: [Tab3Page, ProfileCardComponent]
+    imports: [
+        IonicModule,
+        CommonModule,
+        FormsModule,
+        ExploreContainerComponentModule,
+        RouterModule.forChild([{path: '', component: Tab3Page}]),
+        Tab3PageRoutingModule,
+    ],
+    exports: [
+        ProfileCardComponent
+    ],
+    declarations: [Tab3Page, ProfileCardComponent]
 })
 export class Tab3PageModule {}

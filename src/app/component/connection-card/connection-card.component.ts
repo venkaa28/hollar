@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
 import {Observable} from "rxjs";
 import {UserProfile} from '../../../models/userProfile.model';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-connection-card',
@@ -10,9 +11,14 @@ import {UserProfile} from '../../../models/userProfile.model';
 export class ConnectionCardComponent implements OnInit {
 
   @Input() user: UserProfile;
-  constructor() { }
+  @Input() index: number;
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  viewConnection() {
+    this.router.navigate(['/tabs/tab2/view-connection', {index: this.index}], );
   }
 
 }

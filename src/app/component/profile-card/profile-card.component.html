@@ -20,24 +20,24 @@
   <ion-grid class="ion-padding">
     <ion-row>
       <ion-col>
-        <ion-button *ngIf="this.user?.linkedAccounts.twitter !== ''" href="{{this.user?.linkedAccounts.twitter}}" color="secondary">
+        <ion-button *ngIf="this.user?.linkedAccounts.twitter !== ''" (click)="onNavigate(this.user?.linkedAccounts.twitter)" color="secondary">
           <ion-icon size="large" name="logo-twitter"></ion-icon>
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button *ngIf="this.user?.linkedAccounts.linkedin !== ''" href="{{this.user?.linkedAccounts.linkedin}}" color="secondary">
+        <ion-button *ngIf="this.user?.linkedAccounts.linkedin !== ''" (click)="onNavigate(this.user?.linkedAccounts.linkedin)" color="secondary">
           <ion-icon size="large" name="logo-linkedin"></ion-icon>
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button *ngIf="this.user?.linkedAccounts.github !== ''" href="{{this.user?.linkedAccounts.github}}" color="secondary">
+        <ion-button *ngIf="this.user?.linkedAccounts.github !== ''" (click)="onNavigate(this.user?.linkedAccounts.github)" color="secondary">
           <ion-icon size="large" name="logo-github"></ion-icon>
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-button *ngIf="this.user?.linkedAccounts.instagram !== ''" href="{{this.user?.linkedAccounts.instagram}}" color = "secondary">
+        <ion-button *ngIf="this.user?.linkedAccounts.instagram !== ''" (click)="onNavigate(this.user?.linkedAccounts.instagram)" color = "secondary">
           <ion-icon size="large" name="logo-instagram"></ion-icon>
         </ion-button>
       </ion-col>

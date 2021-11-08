@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>viewConnection</ion-title>
+    <ion-button slot = "start" color="light" [routerLink]="['/tabs/tab2']">
+      <ion-icon size="large" name="arrow-back-outline"></ion-icon>
+    </ion-button>
+    <ion-title>{{connectionToDisplay['user']?.firstName}} {{connectionToDisplay['user']?.lastName}}</ion-title>
   </ion-toolbar>
 </ion-header>
 

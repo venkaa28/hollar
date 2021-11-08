@@ -13,4 +13,8 @@ export class ProfileCardComponent implements OnInit {
 
   ngOnInit() {}
 
+  onNavigate(url) {
+    window.open(url, '_blank');
+  }
+
 }
