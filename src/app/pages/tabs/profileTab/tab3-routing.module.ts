@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: Tab3Page,
+  },
+  {
+    path: 'customize-profile',
+    loadChildren: () => import('./customize-profile/customize-profile.module').then( m => m.CustomizeProfilePageModule)
   }
 ];
 
