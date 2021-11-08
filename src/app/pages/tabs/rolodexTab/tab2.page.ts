@@ -13,6 +13,7 @@ import * as UserActions from '../../../stores/userStore/userActions';
 import * as ConnectionActions from '../../../stores/connectionStore/connectionsActions';
 import {selectConnectionsObs} from "../../../stores/connectionStore/connectionsReducer";
 import {selectUserObs, selectUserState, UserState} from "../../../stores/userStore/userReducer";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-tab2',
@@ -27,7 +28,7 @@ export class Tab2Page implements OnInit {
   currentUserObs: Observable<any>;
 
   constructor(private firebaseService: FirebaseService, private authService: AuthService,
-              private store: Store<any>) {
+              private store: Store<any>, private router: Router) {
   }
 
   async ngOnInit() {
@@ -44,130 +45,5 @@ export class Tab2Page implements OnInit {
       }
     });
   }
-
-
-
-  connections: Array<UserProfile> = [
-     {
-       firstName: 'Nolan',
-       lastName: 'Smith',
-       uid: 'test1',
-       email: 'test@test.com',
-       phoneNumber: '1234567999',
-       connections: [],
-       inviteRequests: [],
-       linkedAccounts: new LinkedAccountsModel(),
-       company: '',
-       industry: '',
-       profilePicture: '',
-       job: '',
-       documents: [],
-    },
-    {
-      firstName: 'Kush',
-      lastName: 'Dani',
-      uid: 'test1',
-      email: 'test@test.com',
-      phoneNumber: '1234567890',
-      connections: [],
-      inviteRequests: [],
-      linkedAccounts: new LinkedAccountsModel(),
-      company: '',
-      industry: '',
-      profilePicture: '',
-      job: '',
-      documents: [],
-    },
-    {
-      firstName: 'Nathan',
-      lastName: 'Zyck',
-      uid: 'test1',
-      email: 'zyck@wisc.edu',
-      phoneNumber: '1234567890',
-      connections: [],
-      inviteRequests: [],
-      linkedAccounts: new LinkedAccountsModel(),
-      company: '',
-      industry: '',
-      profilePicture: '',
-      job: '',
-      documents: [],
-    },
-    {
-      firstName: 'Ryan',
-      lastName: 'Brum',
-      uid: 'test1',
-      email: 'ryan@wisc.edu',
-      phoneNumber: '1234567890',
-      connections: [],
-      inviteRequests: [],
-      linkedAccounts: new LinkedAccountsModel(),
-      company: '',
-      industry: '',
-      profilePicture: '',
-      job: '',
-      documents: [],
-    },
-    {
-      firstName: 'Ani',
-      lastName: 'Venky',
-      uid: 'test1',
-      email: 'Ani@wisc.edu',
-      phoneNumber: '1234567890',
-      connections: [],
-      inviteRequests: [],
-      linkedAccounts: new LinkedAccountsModel(),
-      company: '',
-      industry: '',
-      profilePicture: '',
-      job: '',
-      documents: [],
-    },
-    {
-      firstName: 'Leonardo',
-      lastName: 'Dicaprio',
-      uid: 'test1',
-      email: 'LeoD@hollywood.com',
-      phoneNumber: '1234567890',
-      connections: [],
-      inviteRequests: [],
-      linkedAccounts: new LinkedAccountsModel(),
-      company: '',
-      industry: '',
-      profilePicture: '',
-      job: '',
-      documents: [],
-    },
-    {
-      firstName: 'Lebron',
-      lastName: 'James',
-      uid: 'test1',
-      email: 'Lebron@jordan.com',
-      phoneNumber: '1234567890',
-      connections: [],
-      inviteRequests: [],
-      linkedAccounts: new LinkedAccountsModel(),
-      company: '',
-      industry: '',
-      profilePicture: '',
-      job: '',
-      documents: [],
-    },
-    {
-      firstName: 'Kirill',
-      lastName: 'Kaprizov',
-      uid: 'test1',
-      email: 'kirillthethrill@test.com',
-      phoneNumber: '1234567890',
-      connections: [],
-      inviteRequests: [],
-      linkedAccounts: new LinkedAccountsModel(),
-      company: '',
-      industry: '',
-      profilePicture: '',
-      job: '',
-      documents: [],
-    }
-  ];
 
 }
