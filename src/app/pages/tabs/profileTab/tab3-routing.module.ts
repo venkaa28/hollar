@@ -10,7 +10,11 @@ const routes: Routes = [
   {
     path: 'customize-profile',
     loadChildren: () => import('./customize-profile/customize-profile.module').then( m => m.CustomizeProfilePageModule)
+  },  {
+    path: 'document-view',
+    loadChildren: () => import('./document-view/document-view.module').then( m => m.DocumentViewPageModule)
   }
+
 ];
 
 @NgModule({
