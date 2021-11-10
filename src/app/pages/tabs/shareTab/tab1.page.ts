@@ -66,7 +66,7 @@ export class Tab1Page implements OnInit{
     }, (err) => {
       console.log('error attaching ndef listener', err);
     }).subscribe((event) => {
-      console.log("succesfully subscribed to ndef listener");
+      console.log('succesfully subscribed to ndef listener');
       // writing to tag using android device
       if (this.platform.is('android')) {
 
