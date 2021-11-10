@@ -22,32 +22,32 @@
       <ion-input type="text" formControlName="industry" value="{{this.currentUser.industry}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Documents</ion-label>
-      <ion-input type="text" formControlName="documents" value="{{this.currentUser.documents}}"></ion-input>
+      <ion-label position="floating">Phone Number</ion-label>
+      <ion-input type="tel" formControlName="phonenumber" value="{{this.currentUser.phoneNumber}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">GitHub</ion-label>
+      <ion-label position="floating">GitHub Username</ion-label>
       <ion-input type="text" formControlName="github" value="{{this.currentUser.linkedAccounts.github}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">LinkedIn</ion-label>
+      <ion-label position="floating">LinkedIn Username</ion-label>
       <ion-input type="text" formControlName="linkedin" value="[{{this.currentUser.linkedAccounts.linkedin}}]"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Instagram</ion-label>
+      <ion-label position="floating">Instagram Username</ion-label>
       <ion-input type="text" formControlName="instagram" value="{{this.currentUser.linkedAccounts.instagram}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Twitter</ion-label>
+      <ion-label position="floating">Twitter Username</ion-label>
       <ion-input type="text" formControlName="twitter" value="{{this.currentUser.linkedAccounts.twitter}}"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Personal Website</ion-label>
-      <ion-input type="text" formControlName="personalwebsite" value="{{this.currentUser.linkedAccounts.personalWebsite}}"></ion-input>
+      <ion-input type="url" formControlName="personalwebsite" value="{{this.currentUser.linkedAccounts.personalWebsite}}"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Additional URLs</ion-label>
-      <ion-input type="text" formControlName="additionalURLs" value="[{{this.currentUser.linkedAccounts.additionalURLs}}]"></ion-input>
+      <ion-input type="url" formControlName="additionalURLs" value="[{{this.currentUser.linkedAccounts.additionalURLs}}]"></ion-input>
     </ion-item>
     <ion-button type="submit" expand="block" (click)="saveUpdatedUserPage()">Save Profile Changes</ion-button>
   </form>

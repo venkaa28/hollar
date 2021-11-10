@@ -42,15 +42,29 @@ export class CustomizeProfilePage implements OnInit {
       console.log(this.currentUser);
     });
     console.log('Consoling the current user: ' + this.currentUser.firstName);
+
+    const tempGithub = (this.currentUser.linkedAccounts.github.length > 0) ?
+      this.currentUser.linkedAccounts.github.split('https://github.com/')[1] :
+      this.currentUser.linkedAccounts.github;
+    const tempLinkedIn = (this.currentUser.linkedAccounts.linkedin.length > 0) ?
+      this.currentUser.linkedAccounts.linkedin.split('www.linkedin.com/in/')[1] :
+      this.currentUser.linkedAccounts.linkedin;
+    const tempInstagram = (this.currentUser.linkedAccounts.instagram.length > 0) ?
+      this.currentUser.linkedAccounts.instagram.split('https://instagram.com/')[1] :
+      this.currentUser.linkedAccounts.instagram;
+    const tempTwitter = (this.currentUser.linkedAccounts.twitter.length > 0) ?
+      this.currentUser.linkedAccounts.twitter.split('https://twitter.com/')[1] :
+      this.currentUser.linkedAccounts.twitter;
     this.customizeProfileForm = this.fb.group({
       job: [this.currentUser.job, []],
       company:[this.currentUser.company, []],
       industry: [this.currentUser.industry, []],
       documents: [this.currentUser.documents, []],
-      github: [this.currentUser.linkedAccounts.github, []],
-      linkedin: [this.currentUser.linkedAccounts.linkedin, []],
-      instagram: [this.currentUser.linkedAccounts.instagram, []],
-      twitter: [this.currentUser.linkedAccounts.twitter, []],
+      phonenumber:[this.currentUser.phoneNumber, []],
+      github: [tempGithub, []],
+      linkedin: [tempLinkedIn, []],
+      instagram: [tempInstagram, []],
+      twitter: [tempTwitter, []],
       personalwebsite: [this.currentUser.linkedAccounts.personalWebsite, []],
       additionalURLs: [this.currentUser.linkedAccounts.additionalURLs, []]
       //insert custom matching validator above]]
@@ -61,10 +75,10 @@ export class CustomizeProfilePage implements OnInit {
     const loading = await this.loadingController.create();
     await loading.present();
       const updatedLinkedAccounts: LinkedAccountsModel = {
-        twitter: this.customizeProfileForm.get('twitter').value,
-        github: this.customizeProfileForm.get('github').value,
-        linkedin: this.customizeProfileForm.get('linkedin').value,
-        instagram: this.customizeProfileForm.get('instagram').value,
+        twitter: 'https://twitter.com/' + this.customizeProfileForm.get('twitter').value,
+        github: 'https://github.com/' + this.customizeProfileForm.get('github').value,
+        linkedin: 'www.linkedin.com/in/' + this.customizeProfileForm.get('linkedin').value,
+        instagram: 'https://instagram.com/' + this.customizeProfileForm.get('instagram').value,
         personalWebsite: this.customizeProfileForm.get('personalwebsite').value,
         additionalURLs: this.customizeProfileForm.get('additionalURLs').value,
       };
@@ -73,7 +87,7 @@ export class CustomizeProfilePage implements OnInit {
         email: this.currentUser.email,
         firstName: this.currentUser.firstName,
         lastName: this.currentUser.lastName,
-        phoneNumber: this.currentUser.phoneNumber,
+        phoneNumber: this.customizeProfileForm.get('phonenumber').value,
         connections: this.currentUser.connections,
         inviteRequests: this.currentUser.inviteRequests,
         company: this.customizeProfileForm.get('company').value,
