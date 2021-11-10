@@ -25,7 +25,7 @@ export class FirebaseService {
     return this.afStore.doc<UserProfile>(`users/${firebase.auth().currentUser.uid}`).valueChanges().pipe(
       tap(r => {
         console.groupCollapsed(`Firestore Streaming users/${firebase.auth().currentUser.uid}`);
-        console.log(r['user']);
+        //console.log(r['user']);
         console.groupEnd();
       }),
     );

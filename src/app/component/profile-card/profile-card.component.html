@@ -1,0 +1,56 @@
+<div class="card">
+  <div class="header">
+    <div class="avatar">
+      <img alt="" src="../../../../assets/profileavatar.jpg">
+    </div>
+  </div>
+</div>
+<div class="card-body">
+  <div class="user-meta ion-text-center">
+    <h3 class="name"> {{this.user?.firstName}} {{this.user?.lastName}}</h3>
+    <h5 class="job">Job: {{this.user?.job}}</h5>
+    <h5>Company: {{this.user?.company}}</h5>
+    <h5>Phone Number:
+    <a href="tel:{{this.user?.phoneNumber}}">{{this.user?.phoneNumber}}</a>
+    </h5>
+    <h5>Email:
+    <a href="mailto:{{this.user?.email}}">{{this.user?.email}}</a>
+    </h5>
+  </div>
+  <ion-grid class="ion-padding">
+    <ion-row>
+      <ion-col>
+        <ion-button *ngIf="this.user?.linkedAccounts.twitter !== ''" (click)="onNavigate(this.user?.linkedAccounts.twitter)" color="secondary">
+          <ion-icon size="large" name="logo-twitter"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button *ngIf="this.user?.linkedAccounts.linkedin !== ''" (click)="onNavigate(this.user?.linkedAccounts.linkedin)" color="secondary">
+          <ion-icon size="large" name="logo-linkedin"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button *ngIf="this.user?.linkedAccounts.github !== ''" (click)="onNavigate(this.user?.linkedAccounts.github)" color="secondary">
+          <ion-icon size="large" name="logo-github"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button *ngIf="this.user?.linkedAccounts.instagram !== ''" (click)="onNavigate(this.user?.linkedAccounts.instagram)" color = "secondary">
+          <ion-icon size="large" name="logo-instagram"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button color="secondary">
+          <ion-icon size="large" name="information-circle"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button color="secondary">
+          <ion-icon size="large" name="document"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
