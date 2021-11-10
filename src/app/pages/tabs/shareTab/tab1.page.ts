@@ -10,7 +10,9 @@ import { Platform } from '@ionic/angular';
 })
 export class Tab1Page {
 
-  constructor(private nfc: NFC, private ndef: Ndef, public platform: Platform) {}
+  constructor(private nfc: NFC, private ndef: Ndef, public platform: Platform) {
+    nfc.showSettings().then(r => console.log(r));
+  }
 
   onReadClick() {
     // check if device is android or ios
@@ -28,58 +30,34 @@ export class Tab1Page {
       //   // this.nfc.share(message);
       //   // console.log(JSON.stringify(tag));
       // }, (err) => console.log(err));
-
     } else if (this.platform.is('ios')) {
       // read tag using ios device
       console.log("this is an ios device");
-      this.nfc.scanNdef().then(
-        tag => console.log(JSON.stringify(tag)),
+      this.nfc.scanTag().then(
+        tag => {
+          console.log("reader session started");
+          console.log(JSON.stringify(tag));
+          if (tag.id) {
+            const message = tag.ndefMessage;
+            console.log(message);
+            alert(this.nfc.bytesToString(message[0].payload).substring(3));
+            console.log(this.nfc.bytesToString(message[0].payload).substring(3));
+          }
+        },
         error => console.log(error)
       );
-
     }
-
   }
 
   onWriteClick() {
     this.nfc.addNdefListener(() => {
       console.log('successfully attached ndef listener');
-      const message = [this.ndef.textRecord('hello ryan brumm')];
+      //only this works
+      const message = [this.ndef.textRecord('insert UID here')];
       console.log(message);
       this.nfc.write(message).then(r => console.log(r));
     }, (err) => {
       console.log('error attaching ndef listener', err);
-    }).subscribe((event) => {
-      console.log("succesfully subscribed to ndef listener");
-      // writing to tag using android device
-      if (this.platform.is('android')) {
-        // const message = [];
-        // const tnf = this.ndef.TNF_WELL_KNOWN;
-        // const recordType = 'android.com:pkg';
-        // const payload = 'com.jwsoft.nfcactionlauncher'; // change to our Hollar AAR (android application record)
-        // const record = this.ndef.record(tnf, recordType, [], payload);
-        // message.push(record);
-        // this.nfc.write(message).then(r => console.log(r));
-      } else if (this.platform.is('ios')) {
-        // writing to tag using ios device
-        // same code as android because nfc.write automatically starts a new scanning session and writes to scanned tag
-        const message = [this.ndef.textRecord('hello ryan brumm')];
-        console.log(message);
-        console.log("trying to write to an nfc card");
-        /*const tnf = this.ndef.TNF_EXTERNAL_TYPE;
-        const recordType = 'android.com:pkg';
-        const payload = 'com.jwsoft.nfcactionlauncher'; // change to our Hollar AAR (android application record)
-        const record = this.ndef.record(tnf, recordType, [], payload);
-        message.push(record);*/
-        this.nfc.write(message).then(r => console.log(r));
-
-      }
-
-
-      // this.nfc.write(message);
-    }, (err) => console.log(err));
+    });
   }
-
-  // this.nfc.addNdefListener(onWriteClick);
-
 }
