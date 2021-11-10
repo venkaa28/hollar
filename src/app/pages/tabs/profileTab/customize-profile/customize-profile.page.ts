@@ -44,6 +44,7 @@ export class CustomizeProfilePage implements OnInit {
     console.log('Consoling the current user: ' + this.currentUser.firstName);
     this.customizeProfileForm = this.fb.group({
       job: [this.currentUser.job, []],
+      company:[this.currentUser.company, []],
       industry: [this.currentUser.industry, []],
       documents: [this.currentUser.documents, []],
       github: [this.currentUser.linkedAccounts.github, []],
@@ -75,7 +76,7 @@ export class CustomizeProfilePage implements OnInit {
         phoneNumber: this.currentUser.phoneNumber,
         connections: this.currentUser.connections,
         inviteRequests: this.currentUser.inviteRequests,
-        company: this.currentUser.company,
+        company: this.customizeProfileForm.get('company').value,
         linkedAccounts: updatedLinkedAccounts,
         job: this.customizeProfileForm.get('job').value,
         industry: this.customizeProfileForm.get('industry').value,
