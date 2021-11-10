@@ -34,19 +34,7 @@ export class Tab1Page implements OnInit{
   onReadClick() {
     // check if device is android or ios
     if (this.platform.is('android')) {
-      // read tag using android device
-      // this.nfc.addNdefListener(() => {
-      //   console.log('successfully attached ndef listener');
-      // }, (err) => {
-      //   console.log('error attaching ndef listener', err);
-      // }).subscribe((event) => {
-      //   console.log('received ndef message. data in tag is: ', event.tag);
-      //   console.log('payload content is: ', this.nfc.bytesToString(event.tag.ndefMessage[0].payload));
-      //   console.log('decoded tag id: ', this.nfc.bytesToHexString(event.tag.id));
-      //   // const message = [this.ndef.textRecord('hello, world')];
-      //   // this.nfc.share(message);
-      //   // console.log(JSON.stringify(tag));
-      // }, (err) => console.log(err));
+
     } else if (this.platform.is('ios')) {
       // read tag using ios device
       console.log('this is an ios device');
@@ -77,7 +65,16 @@ export class Tab1Page implements OnInit{
       this.nfc.write(message).then(r => console.log(r));
     }, (err) => {
       console.log('error attaching ndef listener', err);
-    });
+    }).subscribe((event) => {
+      console.log("succesfully subscribed to ndef listener");
+      // writing to tag using android device
+      if (this.platform.is('android')) {
+
+      } else if (this.platform.is('ios')) {
+
+      }
+      // this.nfc.write(message);
+    }, (err) => console.log(err));
   }
 
   handleRead(uid){
