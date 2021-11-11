@@ -16,7 +16,7 @@ export class UserEffects {
       ofType(UserActions.FETCH_USER),
       mergeMap(() => this.firebaseService.user$()
         .pipe(
-          map(user => ({ type: UserActions.FETCH_USER_SUCCESS, payload: user['user'] })),
+          map(user => ({ type: UserActions.FETCH_USER_SUCCESS, payload: user })),
           catchError(() => EMPTY)
         ))
     )

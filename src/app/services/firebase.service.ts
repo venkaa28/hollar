@@ -5,7 +5,7 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFirestore} from "@angular/fire/firestore";
 import {UserProfile} from "../../models/userProfile.model";
 import {Observable} from "rxjs";
-import {map, tap} from "rxjs/operators";
+import {map, switchMap, take, tap} from "rxjs/operators";
 import * as UserActions from "../stores/userStore/userActions";
 
 @Injectable({
@@ -57,12 +57,36 @@ export class FirebaseService {
     return new Promise<any>((resolve, reject) => {
       const currentUser = firebase.auth().currentUser;
       user.linkedAccounts = {...user.linkedAccounts};
-      this.afStore.collection('users').doc(currentUser.uid).set({user})
+      this.afStore.collection('users').doc(currentUser.uid).set({...user})
         .then(
           res => resolve(res),
           err => reject(err)
         );
     });
+  }
+
+  createConnection(current_uid, new_uid: string, current_connects){
+      this.afStore.collection<UserProfile>('users').doc(new_uid).valueChanges().pipe(take(1)).subscribe( (data) => {
+        if (data){
+          const new_user_data = data;
+          console.log(new_user_data);
+          console.log(current_connects);
+          const copy_of_current_connects: string[] = [...current_connects];
+          // if(new_uid in copy_of_current_connects || current_uid in new_user_data['user'].connections){
+          //   return new Promise<any>(resolve => resolve);
+          // }else {
+          copy_of_current_connects.push(new_uid);
+          console.log(copy_of_current_connects);
+          (new_user_data.connections as string[]).push(current_uid);
+          console.log(new_user_data);
+          this.afStore.collection<UserProfile>('users').doc<UserProfile>(current_uid).update( {'connections': copy_of_current_connects as []}).then( r => {
+            console.log('added the new user to the current users connection list');
+          });
+          this.afStore.collection<UserProfile>('users').doc<UserProfile>(new_uid).update({'connections': new_user_data.connections}).then(r => {
+            console.log('added current user to new users connections list');
+          });
+        }
+      });
   }
 
 }

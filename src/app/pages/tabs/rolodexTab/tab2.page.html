@@ -10,7 +10,7 @@
 <!-- this.connectionList" -->
 
   <app-connection-card *ngFor="let connection of this.connectionList; let i = index" [attr.data-index]="i"
-                       [user]="connection['user']" [index]="i"
+                       [user]="connection" [index]="i"
   >{{i}}</app-connection-card>
 
 </ion-content>
