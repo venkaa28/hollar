@@ -65,6 +65,21 @@ export class FirebaseService {
     });
   }
 
+  //wrote an update user method, have not tested yet, not sure if it works yet
+  updateUser(user: Partial<UserProfile>, uid: string){
+    // AFStore Code
+    return new Promise<any>((resolve, reject) => {
+      if (user.linkedAccounts){
+        user.linkedAccounts = {...user.linkedAccounts};
+      }
+      this.afStore.collection('users').doc(uid).update({...user})
+        .then(
+          res => resolve(res),
+          err => reject(err)
+        );
+    });
+  }
+
   createConnection(current_uid, new_uid: string, current_connects){
       this.afStore.collection<UserProfile>('users').doc(new_uid).valueChanges().pipe(take(1)).subscribe( (data) => {
         if (data){
@@ -88,5 +103,4 @@ export class FirebaseService {
         }
       });
   }
-
 }
