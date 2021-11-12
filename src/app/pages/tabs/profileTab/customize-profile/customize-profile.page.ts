@@ -46,9 +46,6 @@ export class CustomizeProfilePage implements OnInit {
     const tempGithub = (this.currentUser.linkedAccounts.github.length > 0) ?
       this.currentUser.linkedAccounts.github.split('https://github.com/')[1] :
       this.currentUser.linkedAccounts.github;
-    const tempLinkedIn = (this.currentUser.linkedAccounts.linkedin.length > 0) ?
-      this.currentUser.linkedAccounts.linkedin.split('www.linkedin.com/in/')[1] :
-      this.currentUser.linkedAccounts.linkedin;
     const tempInstagram = (this.currentUser.linkedAccounts.instagram.length > 0) ?
       this.currentUser.linkedAccounts.instagram.split('https://instagram.com/')[1] :
       this.currentUser.linkedAccounts.instagram;
@@ -62,7 +59,7 @@ export class CustomizeProfilePage implements OnInit {
       documents: [this.currentUser.documents, []],
       phonenumber:[this.currentUser.phoneNumber, []],
       github: [tempGithub, []],
-      linkedin: [tempLinkedIn, []],
+      linkedin: [this.currentUser.linkedAccounts.linkedin, []],
       instagram: [tempInstagram, []],
       twitter: [tempTwitter, []],
       personalwebsite: [this.currentUser.linkedAccounts.personalWebsite, []],
@@ -77,7 +74,7 @@ export class CustomizeProfilePage implements OnInit {
       const updatedLinkedAccounts: LinkedAccountsModel = {
         twitter: 'https://twitter.com/' + this.customizeProfileForm.get('twitter').value,
         github: 'https://github.com/' + this.customizeProfileForm.get('github').value,
-        linkedin: 'www.linkedin.com/in/' + this.customizeProfileForm.get('linkedin').value,
+        linkedin: this.customizeProfileForm.get('linkedin').value,
         instagram: 'https://instagram.com/' + this.customizeProfileForm.get('instagram').value,
         personalWebsite: this.customizeProfileForm.get('personalwebsite').value,
         additionalURLs: this.customizeProfileForm.get('additionalURLs').value,
