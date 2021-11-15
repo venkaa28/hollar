@@ -65,4 +65,8 @@ export class FirebaseService {
     });
   }
 
+  getDocuments() {
+    return this.afStore.collection(`users/${firebase.auth().currentUser.uid}/documents`).valueChanges();
+  }
+
 }
