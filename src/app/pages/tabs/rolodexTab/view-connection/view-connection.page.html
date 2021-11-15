@@ -3,10 +3,10 @@
     <ion-button slot = "start" color="light" [routerLink]="['/tabs/tab2']">
       <ion-icon size="large" name="arrow-back-outline"></ion-icon>
     </ion-button>
-    <ion-title>{{connectionToDisplay['user']?.firstName}} {{connectionToDisplay['user']?.lastName}}</ion-title>
+    <ion-title>{{connectionToDisplay?.firstName}} {{connectionToDisplay?.lastName}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <app-profile-card [user]="connectionToDisplay['user']" > </app-profile-card>
+  <app-profile-card [user]="connectionToDisplay" > </app-profile-card>
 </ion-content>

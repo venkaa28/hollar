@@ -6,6 +6,8 @@ import {Observable} from 'rxjs';
 import * as UserActions from '../../../stores/userStore/userActions';
 import {selectUserObs} from '../../../stores/userStore/userReducer';
 import {Store} from '@ngrx/store';
+import {FirebaseService} from "../../../services/firebase.service";
+
 // might need to downgrade to import { NFC, NDef } from '@ionic-native/nfc/ngx'
 
 @Component({
@@ -18,7 +20,8 @@ export class Tab1Page implements OnInit{
   currentUser: UserProfile;
   currentUserObs: Observable<any>;
 
-  constructor(private nfc: NFC, private ndef: Ndef, public platform: Platform, private store: Store<any>) {
+  constructor(private nfc: NFC, private ndef: Ndef, public platform: Platform, private store: Store<any>,
+              private firebaseService: FirebaseService) {
     //nfc.showSettings().then(r => console.log(r));
   }
 
@@ -66,7 +69,7 @@ export class Tab1Page implements OnInit{
     }, (err) => {
       console.log('error attaching ndef listener', err);
     }).subscribe((event) => {
-      console.log("succesfully subscribed to ndef listener");
+      console.log('succesfully subscribed to ndef listener');
       // writing to tag using android device
       if (this.platform.is('android')) {
 
@@ -84,6 +87,7 @@ export class Tab1Page implements OnInit{
       alert('You are already connected with this user');
     }else {
       alert('going to connect you with new user if this is a valid uid ');
+      this.firebaseService.createConnection(this.currentUser.uid as string, uid, this.currentUser.connections);
       //call create connection here
     }
   }
