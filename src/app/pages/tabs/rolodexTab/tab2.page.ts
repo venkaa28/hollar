@@ -24,8 +24,10 @@ export class Tab2Page implements OnInit {
 
   connectionsObservable: Observable<any[]>;
   connectionList: UserProfile[];
+  connectionListCopy: UserProfile[];
   currentUser: UserProfile;
   currentUserObs: Observable<any>;
+  searchText = '';
 
   constructor(private firebaseService: FirebaseService, private authService: AuthService,
               private store: Store<any>, private router: Router) {
@@ -41,9 +43,19 @@ export class Tab2Page implements OnInit {
         this.connectionsObservable = this.store.select(selectConnectionsObs);
         this.connectionsObservable.subscribe((value) => {
           this.connectionList = value;
+          this.connectionListCopy = value;
         });
       }
     });
   }
-
+  searchRolodex() {
+    this.connectionListCopy = this.connectionList.filter(s =>
+      s.firstName.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      s.lastName.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      s.company.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      s.email.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      s.phoneNumber.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      s.industry.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      s.job.toLowerCase().includes(this.searchText.toLowerCase()));
+  }
 }
