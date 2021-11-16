@@ -22,23 +22,19 @@
       <ion-input type="text" formControlName="industry" value="{{this.currentUser.industry}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Documents</ion-label>
-      <ion-input type="text" formControlName="documents" value="{{this.currentUser.documents}}"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">GitHub</ion-label>
+      <ion-label position="floating">GitHub Username</ion-label>
       <ion-input type="text" formControlName="github" value="{{this.currentUser.linkedAccounts.github}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">LinkedIn</ion-label>
-      <ion-input type="text" formControlName="linkedin" value="[{{this.currentUser.linkedAccounts.linkedin}}]"></ion-input>
+      <ion-label position="floating">Personal LinkedIn URL</ion-label>
+      <ion-input type="url" formControlName="linkedin" value="[{{this.currentUser.linkedAccounts.linkedin}}]"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Instagram</ion-label>
+      <ion-label position="floating">Instagram Username</ion-label>
       <ion-input type="text" formControlName="instagram" value="{{this.currentUser.linkedAccounts.instagram}}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Twitter</ion-label>
+      <ion-label position="floating">Twitter Username</ion-label>
       <ion-input type="text" formControlName="twitter" value="{{this.currentUser.linkedAccounts.twitter}}"></ion-input>
     </ion-item>
     <ion-item>

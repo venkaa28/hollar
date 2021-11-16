@@ -41,16 +41,27 @@ export class CustomizeProfilePage implements OnInit {
       console.log('Getting the user from the dispatch');
       console.log(this.currentUser);
     });
+
     console.log('Consoling the current user: ' + this.currentUser.firstName);
+    const tempGithub = (this.currentUser.linkedAccounts.github.length > 0) ?
+      this.currentUser.linkedAccounts.github.split('https://github.com/')[1] :
+      this.currentUser.linkedAccounts.github;
+    const tempInstagram = (this.currentUser.linkedAccounts.instagram.length > 0) ?
+      this.currentUser.linkedAccounts.instagram.split('https://instagram.com/')[1] :
+      this.currentUser.linkedAccounts.instagram;
+    const tempTwitter = (this.currentUser.linkedAccounts.twitter.length > 0) ?
+      this.currentUser.linkedAccounts.twitter.split('https://twitter.com/')[1] :
+      this.currentUser.linkedAccounts.twitter;
     this.customizeProfileForm = this.fb.group({
       job: [this.currentUser.job, []],
       company:[this.currentUser.company, []],
       industry: [this.currentUser.industry, []],
       documents: [this.currentUser.documents, []],
-      github: [this.currentUser.linkedAccounts.github, []],
+      phonenumber:[this.currentUser.phoneNumber, []],
+      github: [tempGithub, []],
       linkedin: [this.currentUser.linkedAccounts.linkedin, []],
-      instagram: [this.currentUser.linkedAccounts.instagram, []],
-      twitter: [this.currentUser.linkedAccounts.twitter, []],
+      instagram: [tempInstagram, []],
+      twitter: [tempTwitter, []],
       personalwebsite: [this.currentUser.linkedAccounts.personalWebsite, []],
       additionalURLs: [this.currentUser.linkedAccounts.additionalURLs, []]
       //insert custom matching validator above]]
@@ -61,10 +72,10 @@ export class CustomizeProfilePage implements OnInit {
     const loading = await this.loadingController.create();
     await loading.present();
       const updatedLinkedAccounts: LinkedAccountsModel = {
-        twitter: this.customizeProfileForm.get('twitter').value,
-        github: this.customizeProfileForm.get('github').value,
+        twitter: 'https://twitter.com/' + this.customizeProfileForm.get('twitter').value,
+        github: 'https://github.com/' + this.customizeProfileForm.get('github').value,
         linkedin: this.customizeProfileForm.get('linkedin').value,
-        instagram: this.customizeProfileForm.get('instagram').value,
+        instagram: 'https://instagram.com/' + this.customizeProfileForm.get('instagram').value,
         personalWebsite: this.customizeProfileForm.get('personalwebsite').value,
         additionalURLs: this.customizeProfileForm.get('additionalURLs').value,
       };
@@ -80,7 +91,7 @@ export class CustomizeProfilePage implements OnInit {
         linkedAccounts: updatedLinkedAccounts,
         job: this.customizeProfileForm.get('job').value,
         industry: this.customizeProfileForm.get('industry').value,
-        documents: this.customizeProfileForm.get('documents').value,
+        documents: [],
         profilePicture: this.currentUser.profilePicture
     };
     this.firebaseService.writeNewUser(updateUserDict)
