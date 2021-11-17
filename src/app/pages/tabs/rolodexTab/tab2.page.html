@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-searchbar [(ngModel)]="searchText" showClearButton="always" show-cancel-button="always" debounce="500" (ionChange)="searchRolodex()"></ion-searchbar>
+  <ion-searchbar #userSearchBar (ionInput)="searchRolodex($event)"  (ionCancel)="onCancel($event)" showClearButton="always" show-cancel-button="always" debounce="500" ></ion-searchbar>
 
 <!-- this.connectionList" -->
 

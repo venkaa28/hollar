@@ -40,7 +40,7 @@ export class ViewConnectionPage implements OnInit {
         this.connectionsObservable = this.store.select(selectConnectionsObs);
         this.connectionsObservable.subscribe((value) => {
           this.connectionList = value;
-          this.connectionToDisplay = this.connectionList[this.route.snapshot.paramMap.get('index')];
+          this.connectionToDisplay = this.connectionList.find(x => x.uid === this.route.snapshot.paramMap.get('index'));
         });
       }
     });
