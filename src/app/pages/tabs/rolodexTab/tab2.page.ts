@@ -45,11 +45,13 @@ export class Tab2Page implements OnInit {
         this.store.dispatch(new ConnectionActions.FetchConnections(this.currentUser.connections));
         this.connectionsObservable = this.store.select(selectConnectionsObs);
         this.connectionsObservable.subscribe((value) => {
-          this.connectionList = value;
-          this.connectionListCopy = value;
-          if (this.connectionList.length > 1) {
-            this.connectionList.sort((a,b) => a.lastName.localeCompare(b.lastName));
+          if (value.length > 1) {
+            const arrayForSort = [...value];
+            this.connectionList = arrayForSort.sort((a,b) => a.lastName.localeCompare(b.lastName));
             this.connectionListCopy = this.connectionList;
+          }else {
+            this.connectionList = value;
+            this.connectionListCopy = value;
           }
         });
       }
