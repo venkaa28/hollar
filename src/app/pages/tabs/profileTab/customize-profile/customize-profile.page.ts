@@ -11,6 +11,7 @@ import {AlertController, LoadingController} from '@ionic/angular';
 import {LinkedAccountsModel} from '../../../../../models/linkedAccounts.model';
 import {FirebaseService} from '../../../../services/firebase.service';
 import {stringify} from 'querystring';
+import {ImagePicker, ImagePickerOptions} from '@ionic-native/image-picker';
 
 @Component({
   selector: 'app-customize-profile',
@@ -31,6 +32,7 @@ export class CustomizeProfilePage implements OnInit {
     private loadingController: LoadingController,
     private alertController: AlertController,
     private firebaseService: FirebaseService,
+    private imagePicker: ImagePicker
   ) { }
 
   ngOnInit() {
@@ -66,6 +68,18 @@ export class CustomizeProfilePage implements OnInit {
       additionalURLs: [this.currentUser.linkedAccounts.additionalURLs, []]
       //insert custom matching validator above]]
     });
+  }
+
+  getProfilePicture() {
+    let options: ImagePickerOptions;
+    options.maximumImagesCount = 1;
+    options.height = 800;
+    options.width = 800;
+    this.imagePicker.getPictures(options).then((results) => {
+      for (const item of results) {
+        console.log('Image URI: ' + item);
+      }
+    }, (err) => { });
   }
 
   async saveUpdatedUserPage(){
