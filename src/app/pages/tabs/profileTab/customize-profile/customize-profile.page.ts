@@ -11,7 +11,7 @@ import {AlertController, LoadingController} from '@ionic/angular';
 import {LinkedAccountsModel} from '../../../../../models/linkedAccounts.model';
 import {FirebaseService} from '../../../../services/firebase.service';
 import {stringify} from 'querystring';
-import {ImagePicker, ImagePickerOptions} from '@ionic-native/image-picker';
+import {ImagePicker, ImagePickerOptions} from '@ionic-native/image-picker/ngx';
 
 @Component({
   selector: 'app-customize-profile',
