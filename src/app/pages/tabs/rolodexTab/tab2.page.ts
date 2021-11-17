@@ -57,5 +57,6 @@ export class Tab2Page implements OnInit {
       s.phoneNumber.toLowerCase().includes(this.searchText.toLowerCase()) ||
       s.industry.toLowerCase().includes(this.searchText.toLowerCase()) ||
       s.job.toLowerCase().includes(this.searchText.toLowerCase()));
+    this.connectionListCopy.sort((a,b) => a.lastName.localeCompare(b.lastName));
   }
 }
