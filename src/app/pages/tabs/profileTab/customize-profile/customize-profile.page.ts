@@ -11,7 +11,7 @@ import {AlertController, LoadingController} from '@ionic/angular';
 import {LinkedAccountsModel} from '../../../../../models/linkedAccounts.model';
 import {FirebaseService} from '../../../../services/firebase.service';
 import {stringify} from 'querystring';
-import {ImagePicker, ImagePickerOptions} from '@ionic-native/image-picker/ngx';
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 @Component({
   selector: 'app-customize-profile',
@@ -23,6 +23,7 @@ export class CustomizeProfilePage implements OnInit {
   currentUser: UserProfile;
   currentUserObs: Observable<any>;
   customizeProfileForm: FormGroup;
+  imageURL: string;
 
   constructor(
     private authService: AuthService,
@@ -32,7 +33,6 @@ export class CustomizeProfilePage implements OnInit {
     private loadingController: LoadingController,
     private alertController: AlertController,
     private firebaseService: FirebaseService,
-    private imagePicker: ImagePicker
   ) { }
 
   ngOnInit() {
@@ -70,21 +70,27 @@ export class CustomizeProfilePage implements OnInit {
     });
   }
 
-  getProfilePicture() {
-    let options: ImagePickerOptions;
-    options.maximumImagesCount = 1;
-    options.height = 800;
-    options.width = 800;
-    this.imagePicker.getPictures(options).then((results) => {
-      for (const item of results) {
-        console.log('Image URI: ' + item);
-      }
-    }, (err) => { });
-  }
+  async getProfilePicture(){
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri
+    });
+
+    // image.webPath will contain a path that can be set as an image src.
+    // You can access the original file using image.path, which can be
+    // passed to the Filesystem API to read the raw data of the image,
+    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+    this.imageURL = image.base64String;
+    console.log('url: ' + this.imageURL);
+    // Can be set to the src of an image now
+    //imageElement.src = imageUrl;
+  };
 
   async saveUpdatedUserPage(){
     const loading = await this.loadingController.create();
     await loading.present();
+    await this.firebaseService.uploadPicture(this.currentUser.uid+'_profilePic', this.imageURL);
       const updatedLinkedAccounts: LinkedAccountsModel = {
         twitter: 'https://twitter.com/' + this.customizeProfileForm.get('twitter').value,
         github: 'https://github.com/' + this.customizeProfileForm.get('github').value,

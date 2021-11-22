@@ -7,6 +7,7 @@ import {UserProfile} from "../../models/userProfile.model";
 import {Observable} from "rxjs";
 import {map, switchMap, take, tap} from "rxjs/operators";
 import * as UserActions from "../stores/userStore/userActions";
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class FirebaseService {
   public userObservable: Observable<UserProfile>;
 
   constructor(private afAuth: AngularFireAuth, private afDB: AngularFireDatabase,
-              private afStore: AngularFirestore) {
+              private afStore: AngularFirestore, private storage: AngularFireStorage) {
 
   }
 
@@ -79,6 +80,25 @@ export class FirebaseService {
         );
     });
   }
+
+  async uploadPicture(filePath, file) {
+    //const file: any = this.base64ToImage(filePath);
+    const ref = this.storage.ref(filePath);
+    const task = ref.put(file);
+  }
+
+/*  base64ToImage(dataURI) {
+    const fileDate = dataURI.split(',');
+    // const mime = fileDate[0].match(/:(.*?);/)[1];
+    const byteString = atob(fileDate[1]);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([arrayBuffer], { type: 'image/png' });
+    return blob;
+  }*/
 
   createConnection(current_uid, new_uid: string, current_connects){
       this.afStore.collection<UserProfile>('users').doc(new_uid).valueChanges().pipe(take(1)).subscribe( (data) => {
