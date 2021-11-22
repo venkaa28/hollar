@@ -81,14 +81,14 @@ export class FirebaseService {
     });
   }
 
-  async uploadPicture(filePath, file) {
-    //const file: any = this.base64ToImage(filePath);
+  async uploadPicture(filePath, fileDataUrl) {
+    const file: any = this.base64ToImage(fileDataUrl);
     const ref = this.storage.ref(filePath);
-    const task = ref.put(file);
+    const task = this.storage.upload(filePath, file);
   }
 
-/*  base64ToImage(dataURI) {
-    const fileDate = dataURI.split(',');
+  base64ToImage(dataURI) {
+    //const fileDate = dataURI.split(',');
     // const mime = fileDate[0].match(/:(.*?);/)[1];
     const byteString = atob(fileDate[1]);
     const arrayBuffer = new ArrayBuffer(byteString.length);
@@ -98,7 +98,7 @@ export class FirebaseService {
     }
     const blob = new Blob([arrayBuffer], { type: 'image/png' });
     return blob;
-  }*/
+  }
 
   createConnection(current_uid, new_uid: string, current_connects){
       this.afStore.collection<UserProfile>('users').doc(new_uid).valueChanges().pipe(take(1)).subscribe( (data) => {

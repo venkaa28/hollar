@@ -81,7 +81,7 @@ export class CustomizeProfilePage implements OnInit {
     // You can access the original file using image.path, which can be
     // passed to the Filesystem API to read the raw data of the image,
     // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-    this.imageURL = image.base64String;
+    this.imageURL = image.dataUrl;
     console.log('url: ' + this.imageURL);
     // Can be set to the src of an image now
     //imageElement.src = imageUrl;
