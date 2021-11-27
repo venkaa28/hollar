@@ -5,9 +5,9 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFirestore} from "@angular/fire/firestore";
 import {UserProfile} from "../../models/userProfile.model";
 import {Observable} from "rxjs";
-import {map, switchMap, take, tap} from "rxjs/operators";
+import {finalize, map, switchMap, take, tap} from "rxjs/operators";
 import * as UserActions from "../stores/userStore/userActions";
-import { AngularFireStorage } from '@angular/fire/storage';
+import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -82,23 +82,18 @@ export class FirebaseService {
   }
 
   async uploadPicture(filePath, fileDataUrl) {
-    const file: any = this.base64ToImage(fileDataUrl);
-    const ref = this.storage.ref(filePath);
-    const task = this.storage.upload(filePath, file);
+    const task = this.storage.ref(filePath).putString(fileDataUrl, 'data_url');
+    task.snapshotChanges().pipe(
+      finalize(() => this.updateUser({profilePicture: filePath}, firebase.auth().currentUser.uid))
+    ).subscribe();
   }
 
-  base64ToImage(dataURI) {
-    //const fileDate = dataURI.split(',');
-    // const mime = fileDate[0].match(/:(.*?);/)[1];
-    const byteString = atob(fileDate[1]);
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const int8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-      int8Array[i] = byteString.charCodeAt(i);
-    }
-    const blob = new Blob([arrayBuffer], { type: 'image/png' });
-    return blob;
-  }
+  // async getDownloadURL(refPath) {
+  //   const url = await this.storage.ref(refPath).getDownloadURL().pipe(take(1)).subscribe((data) => {
+  //     console.log(data);
+  //   });
+  // }
+
 
   createConnection(current_uid, new_uid: string, current_connects){
       this.afStore.collection<UserProfile>('users').doc(new_uid).valueChanges().pipe(take(1)).subscribe( (data) => {

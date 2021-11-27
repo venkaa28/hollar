@@ -23,7 +23,6 @@ export class CustomizeProfilePage implements OnInit {
   currentUser: UserProfile;
   currentUserObs: Observable<any>;
   customizeProfileForm: FormGroup;
-  imageURL: string;
 
   constructor(
     private authService: AuthService,
@@ -70,27 +69,10 @@ export class CustomizeProfilePage implements OnInit {
     });
   }
 
-  async getProfilePicture(){
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: true,
-      resultType: CameraResultType.Uri
-    });
-
-    // image.webPath will contain a path that can be set as an image src.
-    // You can access the original file using image.path, which can be
-    // passed to the Filesystem API to read the raw data of the image,
-    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-    this.imageURL = image.dataUrl;
-    console.log('url: ' + this.imageURL);
-    // Can be set to the src of an image now
-    //imageElement.src = imageUrl;
-  };
 
   async saveUpdatedUserPage(){
     const loading = await this.loadingController.create();
     await loading.present();
-    await this.firebaseService.uploadPicture(this.currentUser.uid+'_profilePic', this.imageURL);
       const updatedLinkedAccounts: LinkedAccountsModel = {
         twitter: 'https://twitter.com/' + this.customizeProfileForm.get('twitter').value,
         github: 'https://github.com/' + this.customizeProfileForm.get('github').value,
@@ -114,7 +96,7 @@ export class CustomizeProfilePage implements OnInit {
         documents: [],
         profilePicture: this.currentUser.profilePicture
     };
-    this.firebaseService.writeNewUser(updateUserDict)
+    this.firebaseService.updateUser(updateUserDict, this.currentUser.uid)
       .then(async res => {
         await loading.dismiss();
         await this.route.navigateByUrl('/tabs/tab3', {replaceUrl: true});
