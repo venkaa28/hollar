@@ -6,7 +6,7 @@ import {Observable} from "rxjs";
 import * as UserActions from "../../../stores/userStore/userActions";
 import {selectUserObs} from "../../../stores/userStore/userReducer";
 import {Router} from "@angular/router";
-import {Camera, CameraOptions, CameraResultType} from "@capacitor/camera";
+import {Camera, CameraOptions, CameraPermissionType, CameraResultType} from "@capacitor/camera";
 import {FirebaseService} from "../../../services/firebase.service";
 
 
