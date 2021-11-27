@@ -49,7 +49,6 @@ export class Tab1Page implements OnInit{
             const message = tag.ndefMessage;
             //console.log(message);
             const uid = this.nfc.bytesToString(message[0].payload).substring(3);
-            alert(uid);
             console.log(this.nfc.bytesToString(message[0].payload).substring(3));
             this.handleRead(uid);
           }
@@ -86,8 +85,8 @@ export class Tab1Page implements OnInit{
     } else if (uid in this.currentUser.connections){
       alert('You are already connected with this user');
     }else {
-      alert('going to connect you with new user if this is a valid uid ');
       this.firebaseService.createConnection(this.currentUser.uid as string, uid, this.currentUser.connections);
+
       //call create connection here
     }
   }

@@ -88,13 +88,6 @@ export class FirebaseService {
     ).subscribe();
   }
 
-  // async getDownloadURL(refPath) {
-  //   const url = await this.storage.ref(refPath).getDownloadURL().pipe(take(1)).subscribe((data) => {
-  //     console.log(data);
-  //   });
-  // }
-
-
   createConnection(current_uid, new_uid: string, current_connects){
       this.afStore.collection<UserProfile>('users').doc(new_uid).valueChanges().pipe(take(1)).subscribe( (data) => {
         if (data){
@@ -102,15 +95,13 @@ export class FirebaseService {
           console.log(new_user_data);
           console.log(current_connects);
           const copy_of_current_connects: string[] = [...current_connects];
-          // if(new_uid in copy_of_current_connects || current_uid in new_user_data['user'].connections){
-          //   return new Promise<any>(resolve => resolve);
-          // }else {
           copy_of_current_connects.push(new_uid);
           console.log(copy_of_current_connects);
           (new_user_data.connections as string[]).push(current_uid);
           console.log(new_user_data);
           this.afStore.collection<UserProfile>('users').doc<UserProfile>(current_uid).update( {'connections': copy_of_current_connects as []}).then( r => {
             console.log('added the new user to the current users connection list');
+            alert("Successfully connected with new user");
           });
           this.afStore.collection<UserProfile>('users').doc<UserProfile>(new_uid).update({'connections': new_user_data.connections}).then(r => {
             console.log('added current user to new users connections list');
