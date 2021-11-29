@@ -28,6 +28,7 @@
     "@capacitor/ios": "3.2.4",
     "@capacitor/keyboard": "1.1.0",
     "@capacitor/status-bar": "1.0.3",
+    "@ionic-native/file-picker": "^5.36.0",
     "@ionic-native/image-picker": "^5.36.0",
     "@ionic-native/nfc": "^5.36.0",
     "@ionic/angular": "^5.5.2",
