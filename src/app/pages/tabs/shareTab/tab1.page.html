@@ -1,28 +1,36 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title class="ion-text-center">
-      Share
-    </ion-title>
+    <ion-title class="ion-text-center">Share</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Share</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-text class="ion-text-center" color="primary">
-    <h1>Search Friends</h1>
-  </ion-text>
-  <ion-item class="ion-align-items-center">
-    <ion-searchbar color="primary"></ion-searchbar>
-  </ion-item>
-  <ion-button expand="block">Send Profile via SMS</ion-button>
-  <ion-text class="ion-text-center" color="primary">
-    <h1>Use Your NFC Card To</h1>
-  </ion-text>
-  <ion-row style="height: 20px"></ion-row>
-  <ion-button (click)="onWriteClick()" expand="block">Send Profile to Card</ion-button>
-  <ion-row style="height: 20px"></ion-row>
-  <ion-button (click)="onReadClick()" expand="block">Read Profile from Card</ion-button>
+<!--  <ion-header collapse="condense">-->
+<!--    <ion-toolbar>-->
+<!--      <ion-title size="large">Share</ion-title>-->
+<!--    </ion-toolbar>-->
+<!--  </ion-header>-->
+<!--  <ion-text class="ion-text-center" color="primary">-->
+<!--    <h1>Search Friends</h1>-->
+<!--  </ion-text>-->
+<!--  <ion-item class="ion-align-items-center">-->
+<!--    <ion-searchbar color="primary"></ion-searchbar>-->
+<!--  </ion-item>-->
+<!--  <ion-button expand="block">Send Profile via SMS</ion-button>-->
+  <ion-grid>
+    <ion-row class="ion-align-items-center">
+      <ion-text color="primary">
+        <h1>Use Your NFC Card To:</h1>
+      </ion-text>
+    </ion-row>
+    <ion-row style="height: 20px"></ion-row>
+    <ion-row class="ion-align-items-center">
+      <ion-col>
+        <ion-button (click)="onWriteClick()" size="large" shape="round" class="ion-text-center">Send Profile to Card</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row style="height: 20px"></ion-row>
+    <ion-row class="ion-align-items-center">
+      <ion-button (click)="onReadClick()" size="large" shape="round">Read Profile from Card</ion-button>
+    </ion-row>
+  </ion-grid>
 </ion-content>
