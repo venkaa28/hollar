@@ -5,9 +5,10 @@ import {UserProfile} from "../../../../models/userProfile.model";
 import {Observable} from "rxjs";
 import * as UserActions from "../../../stores/userStore/userActions";
 import {selectUserObs} from "../../../stores/userStore/userReducer";
-import * as ConnectionActions from "../../../stores/connectionStore/connectionsActions";
-import {selectConnectionsObs} from "../../../stores/connectionStore/connectionsReducer";
 import {Router} from "@angular/router";
+import {Camera, CameraOptions, CameraPermissionType, CameraResultType} from "@capacitor/camera";
+import {FirebaseService} from "../../../services/firebase.service";
+
 
 @Component({
   selector: 'app-tab3',
@@ -18,10 +19,13 @@ export class Tab3Page implements OnInit{
 
   currentUser: UserProfile;
   currentUserObs: Observable<any>;
+  imageURL: string;
+
 
   constructor(private authService: AuthService,
               private store: Store<any>,
-              private route: Router) {}
+              private route: Router,
+              private firebaseService: FirebaseService) {}
 
   ngOnInit(): void {
     this.store.dispatch(new UserActions.FetchUser());
@@ -29,6 +33,9 @@ export class Tab3Page implements OnInit{
     this.currentUserObs.subscribe( (value: UserProfile) => {
       this.currentUser = value;
     });
+
+    //await this.firebaseService.uploadPicture(this.currentUser.uid+'_profilePic', this.imageURL);
+
   }
 
   logout(){
@@ -37,4 +44,25 @@ export class Tab3Page implements OnInit{
   customizePage(){
     this.route.navigate(['tabs/tab3/customize-profile']);
   }
+
+  async getProfilePicture(){
+    const options: CameraOptions = {
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.DataUrl,
+    };
+
+    Camera.getPhoto(options).then(async (imageData) => {
+      this.imageURL = imageData.dataUrl;
+      //console.log(this.imageURL);
+      await this.firebaseService.uploadPicture('profile_pictures/' + this.currentUser.uid, this.imageURL);
+    }, (err) => {
+      window.alert("error getting photo");
+    });
+
+    // this.imageURL = image.dataUrl;
+    // console.log('url: ' + this.imageURL);
+
+  };
+
 }

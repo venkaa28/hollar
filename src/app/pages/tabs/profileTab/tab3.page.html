@@ -1,9 +1,9 @@
 <ion-header translucent no-border>
   <ion-toolbar>
-    <ion-button slot = "start" color="light" (click)="customizePage()">
-      <ion-icon size="large" name="create"></ion-icon>
-      Edit
-    </ion-button>
+<!--    <ion-button slot = "start" color="light" (click)="customizePage()">-->
+<!--      <ion-icon size="large" name="create"></ion-icon>-->
+<!--      Edit-->
+<!--    </ion-button>-->
     <ion-button slot = "end" color="light" (click)="logout()">
       <ion-icon size="large" name="log-out" ></ion-icon>
       Logout
@@ -15,6 +15,19 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+    <ion-fab horizontal="start" vertical="top" slot="fixed" edge>
+      <ion-fab-button>
+        <ion-icon name="create"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list>
+        <ion-fab-button color="light" (click)="getProfilePicture()">
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="light" (click)="customizePage()">
+          <ion-icon name="information-circle-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
   <app-profile-card [user]="currentUser"></app-profile-card>
 </ion-content>
 
