@@ -8,7 +8,8 @@ import {selectUserObs} from "../../../stores/userStore/userReducer";
 import {Router} from "@angular/router";
 import {Camera, CameraOptions, CameraPermissionType, CameraResultType} from "@capacitor/camera";
 import {FirebaseService} from "../../../services/firebase.service";
-
+import {IOSFilePicker} from "@ionic-native/file-picker/ngx";
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab3',
@@ -25,7 +26,9 @@ export class Tab3Page implements OnInit{
   constructor(private authService: AuthService,
               private store: Store<any>,
               private route: Router,
-              private firebaseService: FirebaseService) {}
+              private firebaseService: FirebaseService,
+              private filePicker: IOSFilePicker,
+              public platform: Platform) {}
 
   ngOnInit(): void {
     this.store.dispatch(new UserActions.FetchUser());
@@ -64,5 +67,14 @@ export class Tab3Page implements OnInit{
     // console.log('url: ' + this.imageURL);
 
   };
+
+  async getDocument(){
+
+    if(this.platform.is('ios')) {
+      this.filePicker.pickFile()
+        .then(uri => console.log(uri))
+        .catch(err => console.log("Error", err));
+    }
+  }
 
 }

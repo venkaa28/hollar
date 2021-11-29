@@ -36,6 +36,7 @@
     "@ngrx/effects": "^12.5.1",
     "@ngrx/store": "^12.5.1",
     "@robingenz/capacitor-firebase-authentication": "^0.3.11",
+    "cordova-plugin-filepicker": "^1.1.6",
     "cordova-plugin-telerik-imagepicker": "^2.3.6",
     "firebase": "^8.10.0",
     "ngrx": "^0.0.1-security",
