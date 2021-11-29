@@ -14,6 +14,8 @@ import * as ConnectionActions from '../../../stores/connectionStore/connectionsA
 import {selectConnectionsObs} from "../../../stores/connectionStore/connectionsReducer";
 import {selectUserObs, selectUserState, UserState} from "../../../stores/userStore/userReducer";
 import {Router} from "@angular/router";
+import {ViewChild} from "@angular/core";
+import {IonSearchbar} from "@ionic/angular";
 
 @Component({
   selector: 'app-tab2',
@@ -24,8 +26,11 @@ export class Tab2Page implements OnInit {
 
   connectionsObservable: Observable<any[]>;
   connectionList: UserProfile[];
+  connectionListCopy: UserProfile[];
   currentUser: UserProfile;
   currentUserObs: Observable<any>;
+
+  @ViewChild('userSearchBar') searchbar: IonSearchbar;
 
   constructor(private firebaseService: FirebaseService, private authService: AuthService,
               private store: Store<any>, private router: Router) {
@@ -40,10 +45,33 @@ export class Tab2Page implements OnInit {
         this.store.dispatch(new ConnectionActions.FetchConnections(this.currentUser.connections));
         this.connectionsObservable = this.store.select(selectConnectionsObs);
         this.connectionsObservable.subscribe((value) => {
-          this.connectionList = value;
+          if (value.length > 1) {
+            const arrayForSort = [...value];
+            this.connectionList = arrayForSort.sort((a,b) => a.lastName.localeCompare(b.lastName));
+            this.connectionListCopy = this.connectionList;
+          }else {
+            this.connectionList = value;
+            this.connectionListCopy = value;
+          }
         });
       }
     });
+    // this.searchText = '';
+  }
+  searchRolodex(searchText) {
+    this.connectionListCopy = this.connectionList.filter(s =>
+      s.firstName.toLowerCase().includes(searchText.target.value.toLowerCase()) ||
+      s.lastName.toLowerCase().includes(searchText.target.value.toLowerCase()) ||
+      s.company.toLowerCase().includes(searchText.target.value.toLowerCase()) ||
+      s.email.toLowerCase().includes(searchText.target.value.toLowerCase()) ||
+      s.phoneNumber.toLowerCase().includes(searchText.target.value.toLowerCase()) ||
+      s.industry.toLowerCase().includes(searchText.target.value.toLowerCase()) ||
+      s.job.toLowerCase().includes(searchText.target.value.toLowerCase()));
+    this.connectionListCopy.sort((a,b) => a.lastName.localeCompare(b.lastName));
   }
 
+  onCancel(event) {
+    event.target.value = '';
+    this.connectionListCopy = this.connectionList;
+  }
 }

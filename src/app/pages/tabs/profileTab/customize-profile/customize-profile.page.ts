@@ -11,6 +11,7 @@ import {AlertController, LoadingController} from '@ionic/angular';
 import {LinkedAccountsModel} from '../../../../../models/linkedAccounts.model';
 import {FirebaseService} from '../../../../services/firebase.service';
 import {stringify} from 'querystring';
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 @Component({
   selector: 'app-customize-profile',
@@ -68,6 +69,7 @@ export class CustomizeProfilePage implements OnInit {
     });
   }
 
+
   async saveUpdatedUserPage(){
     const loading = await this.loadingController.create();
     await loading.present();
@@ -94,7 +96,7 @@ export class CustomizeProfilePage implements OnInit {
         documents: [],
         profilePicture: this.currentUser.profilePicture
     };
-    this.firebaseService.writeNewUser(updateUserDict)
+    this.firebaseService.updateUser(updateUserDict, this.currentUser.uid)
       .then(async res => {
         await loading.dismiss();
         await this.route.navigateByUrl('/tabs/tab3', {replaceUrl: true});

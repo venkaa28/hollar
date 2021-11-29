@@ -5,8 +5,9 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import {AngularFirestore} from "@angular/fire/firestore";
 import {UserProfile} from "../../models/userProfile.model";
 import {Observable} from "rxjs";
-import {map, switchMap, take, tap} from "rxjs/operators";
+import {finalize, map, switchMap, take, tap} from "rxjs/operators";
 import * as UserActions from "../stores/userStore/userActions";
+import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class FirebaseService {
   public userObservable: Observable<UserProfile>;
 
   constructor(private afAuth: AngularFireAuth, private afDB: AngularFireDatabase,
-              private afStore: AngularFirestore) {
+              private afStore: AngularFirestore, private storage: AngularFireStorage) {
 
   }
 
@@ -80,6 +81,13 @@ export class FirebaseService {
     });
   }
 
+  async uploadPicture(filePath, fileDataUrl) {
+    const task = this.storage.ref(filePath).putString(fileDataUrl, 'data_url');
+    task.snapshotChanges().pipe(
+      finalize(() => this.updateUser({profilePicture: filePath}, firebase.auth().currentUser.uid))
+    ).subscribe();
+  }
+
   createConnection(current_uid, new_uid: string, current_connects){
       this.afStore.collection<UserProfile>('users').doc(new_uid).valueChanges().pipe(take(1)).subscribe( (data) => {
         if (data){
@@ -87,15 +95,13 @@ export class FirebaseService {
           console.log(new_user_data);
           console.log(current_connects);
           const copy_of_current_connects: string[] = [...current_connects];
-          // if(new_uid in copy_of_current_connects || current_uid in new_user_data['user'].connections){
-          //   return new Promise<any>(resolve => resolve);
-          // }else {
           copy_of_current_connects.push(new_uid);
           console.log(copy_of_current_connects);
           (new_user_data.connections as string[]).push(current_uid);
           console.log(new_user_data);
           this.afStore.collection<UserProfile>('users').doc<UserProfile>(current_uid).update( {'connections': copy_of_current_connects as []}).then( r => {
             console.log('added the new user to the current users connection list');
+            alert("Successfully connected with new user");
           });
           this.afStore.collection<UserProfile>('users').doc<UserProfile>(new_uid).update({'connections': new_user_data.connections}).then(r => {
             console.log('added current user to new users connections list');
