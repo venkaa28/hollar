@@ -4,10 +4,9 @@
   </ion-avatar>
   <ion-label>
     <h1>{{ this.user?.firstName }} {{ this.user?.lastName }}</h1>
-    <h2 slot="start">UW-Madison - {{ this.user?.email }} - {{ this.user?.phoneNumber }}</h2>
+    <h2 slot="start">{{ this.user?.email }} - {{ this.user?.phoneNumber }}</h2>
     <p>
-      This is my short summary/description of me and my projects.
-      <br> Also check out my socials, github, and work experience on my profile!
+      {{ this.user?.job}} - {{ this.user?.company}}
     </p>
   </ion-label>
 </ion-item>

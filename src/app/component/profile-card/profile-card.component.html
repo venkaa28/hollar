@@ -1,7 +1,8 @@
 <div class="card">
   <div class="header">
     <div class="avatar">
-      <img alt="" src="../../../../assets/profileavatar.jpg">
+      <img *ngIf="this.user?.profilePicture === ''" alt="" src="../../../../assets/profileavatar.jpg">
+      <img *ngIf="this.user?.profilePicture !== ''" alt="" [src]="profileUrl | async" />
     </div>
   </div>
 </div>
