@@ -5,11 +5,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-searchbar showClearButton="always" show-cancel-button="always" debounce="500"></ion-searchbar>
+  <ion-searchbar #userSearchBar (ionInput)="searchRolodex($event)"  (ionCancel)="onCancel($event)" showClearButton="always" show-cancel-button="always" debounce="500" ></ion-searchbar>
 
 <!-- this.connectionList" -->
 
-  <app-connection-card *ngFor="let connection of this.connectionList; let i = index" [attr.data-index]="i"
+  <app-connection-card *ngFor="let connection of this.connectionListCopy; let i = index" [attr.data-index]="i"
                        [user]="connection" [index]="i"
   >{{i}}</app-connection-card>
 

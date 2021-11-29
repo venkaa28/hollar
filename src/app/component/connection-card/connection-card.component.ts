@@ -18,7 +18,7 @@ export class ConnectionCardComponent implements OnInit {
   }
 
   viewConnection() {
-    this.router.navigate(['/tabs/tab2/view-connection', {index: this.index}], );
+    this.router.navigate(['/tabs/tab2/view-connection', {index: this.user.uid}], );
   }
 
 }
