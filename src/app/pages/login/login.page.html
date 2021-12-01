@@ -23,9 +23,9 @@
         <span *ngIf="password.errors?.minlength">Password needs to be at least 6 characters</span>
       </div>
     </div>
-    <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Login</ion-button>
+    <ion-button type="submit" size="large" shape="round" class="ion-align-items-center" [disabled]="!credentials.valid">Login</ion-button>
   </form>
-  <ion-button type="button" expand="block" (click)="goToSignUP()" >Dont have an account? Sign Up Here</ion-button>
+  <ion-button type="button" size="large" shape="round" class="ion-align-items-center" (click)="goToSignUP()" >Dont have an account? Sign Up Here</ion-button>
 
   <a routerLink="/forgot-password">Forgot your password?</a>
 </ion-content>
