@@ -29,7 +29,11 @@ const routes: Routes = [
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
+  },  {
+    path: 'modal',
+    loadChildren: () => import('./modals/modal/modal.module').then( m => m.ModalPageModule)
   },
+
 ];
 @NgModule({
   imports: [
