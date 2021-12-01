@@ -10,6 +10,10 @@ import {Camera, CameraOptions, CameraPermissionType, CameraResultType} from "@ca
 import {FirebaseService} from "../../../services/firebase.service";
 import {IOSFilePicker} from "@ionic-native/file-picker/ngx";
 import { Platform } from '@ionic/angular';
+import {AlertController} from "@ionic/angular";
+import {ToastController} from "@ionic/angular";
+import { File } from '@ionic-native/file/ngx';
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 
 @Component({
   selector: 'app-tab3',
@@ -28,7 +32,10 @@ export class Tab3Page implements OnInit{
               private route: Router,
               private firebaseService: FirebaseService,
               private filePicker: IOSFilePicker,
-              public platform: Platform) {}
+              public platform: Platform,
+              private alertController: AlertController,
+              private toastController: ToastController,
+              private file: File) {}
 
   ngOnInit(): void {
     this.store.dispatch(new UserActions.FetchUser());
@@ -60,11 +67,8 @@ export class Tab3Page implements OnInit{
       //console.log(this.imageURL);
       await this.firebaseService.uploadPicture('profile_pictures/' + this.currentUser.uid, this.imageURL);
     }, (err) => {
-      window.alert("error getting photo");
+      window.alert('error getting photo');
     });
-
-    // this.imageURL = image.dataUrl;
-    // console.log('url: ' + this.imageURL);
 
   };
 
@@ -72,9 +76,81 @@ export class Tab3Page implements OnInit{
 
     if(this.platform.is('ios')) {
       this.filePicker.pickFile()
-        .then(uri => console.log(uri))
+        .then(async uri => {
+          const alert = await this.alertController.create({
+            header: 'Confirm!',
+            message: 'Enter Name for file',
+            inputs: [
+              {
+                name: 'file_name',
+                type: 'text',
+                placeholder: 'Enter File Name'
+              }
+              ],
+            buttons: [
+              {
+                text: 'Cancel',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: (blah) => {
+                  console.log('Confirm Cancel: blah');
+                }
+              }, {
+                text: 'Okay',
+                handler: async (data) => {
+                  if (data['file_name'].length > 0) {
+                    const correctPath = uri.substr(0, uri.lastIndexOf('/') + 1);
+                    const currentName = uri.substring(uri.lastIndexOf('/') + 1);
+                    console.log('correctPath:', 'file:///' + correctPath);
+                    console.log('currentName:', currentName);
+                    console.log('file:///' + uri);
+                    Filesystem.readFile(
+                      {path: 'file:///' + uri}
+                    ).then( async (result) => {
+                      await this.firebaseService.uploadDocument(
+                        'documents/' + this.currentUser.uid + '/' + data['file_name'], result['data'], this.currentUser.documents);
+                    })
+
+                    // this.file.readAsDataURL('file:///' + correctPath, currentName)
+                    //   .then(async dataURL => {
+                    //     console.log("printing something");
+                    //       console.log(dataURL);
+                    //       await this.firebaseService.uploadDocument(
+                    //         'documents/' + this.currentUser.uid + '/' + data['file_name'], dataURL);
+                    //     }
+                    //   )
+
+                    // this.file.resolveDirectoryUrl(uri).then( (resolvedURI) => {
+                    //   this.file.getFile(resolvedURI, currentName, { create: false }).then(async fileData => {
+                    //       console.log(resolvedURI);
+                    //       console.log(fileData);
+                    //       await this.firebaseService.uploadDocument(
+                    //         'documents/' + this.currentUser.uid + '/' + data['file_name'], fileData);
+                    //     });
+                    //   })
+                      .catch(e => {
+                        //window.alert("File Names with no spaces please, try again");
+                        console.log('error read:', e);
+                      });
+                    return true;
+                  } else {
+                    const toast = await this.toastController.create({
+                      header: 'Invalid File Name',
+                      message: 'Try again',
+                      color: 'warning',
+                      duration: 2000
+                    });
+                    await toast.present();
+                    return false;
+                  }
+                }
+              }
+            ]
+          });
+
+          await alert.present();
+        })
         .catch(err => console.log("Error", err));
     }
   }
-
 }
