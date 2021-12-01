@@ -12,8 +12,7 @@ import {
 export class ModalPage implements OnInit {
 
 
-  modalTitle: string;
-  modelId: number;
+  docs: [];
 
   constructor(
     private modalController: ModalController,
@@ -22,8 +21,8 @@ export class ModalPage implements OnInit {
 
   ngOnInit() {
     console.table(this.navParams);
-    this.modelId = this.navParams.data.paramID;
-    this.modalTitle = this.navParams.data.paramTitle;
+    this.docs = this.navParams.data.docs;
+    console.log(this.docs);
   }
 
   async closeModal() {

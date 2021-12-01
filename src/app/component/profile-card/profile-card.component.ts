@@ -39,8 +39,7 @@ export class ProfileCardComponent implements OnInit, OnChanges {
     const modal = await this.modalController.create({
       component: ModalPage,
       componentProps: {
-        'paramID': 'Resume',
-        'paramTitle': 'ref'
+        'docs': this.user?.documents
       }
     });
 
