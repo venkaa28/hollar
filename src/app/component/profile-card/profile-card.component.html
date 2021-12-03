@@ -43,12 +43,12 @@
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button color="secondary">
-          <ion-icon size="large" name="information-circle"></ion-icon>
+        <ion-button *ngIf="this.user?.linkedAccounts.personalWebsite !== ''" (click)="onNavigate(this.user?.linkedAccounts.personalWebsite)" color="secondary">
+          <ion-icon size="large" name="link-outline"></ion-icon>
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button color="secondary" (click)="presentModal()">
+        <ion-button *ngIf="this.user?.documents.length !== 0" color="secondary" (click)="presentModal()">
           <ion-icon size="large" name="document"></ion-icon>
         </ion-button>
       </ion-col>

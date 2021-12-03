@@ -4,10 +4,10 @@
 <!--      <ion-icon size="large" name="create"></ion-icon>-->
 <!--      Edit-->
 <!--    </ion-button>-->
-    <ion-button slot = "end" color="light" (click)="logout()">
-      <ion-icon size="large" name="log-out" ></ion-icon>
-      Logout
-    </ion-button>
+<!--    <ion-button slot = "end" color="light" (click)="logout()">-->
+<!--      <ion-icon size="large" name="log-out" ></ion-icon>-->
+<!--      Logout-->
+<!--    </ion-button>-->
     <ion-title class="ion-text-center">
       Profile
     </ion-title>
@@ -30,6 +30,11 @@
           <ion-icon name="document"></ion-icon>
         </ion-fab-button>
       </ion-fab-list>
+    </ion-fab>
+    <ion-fab horizontal="end" vertical="top" slot="fixed" edge>
+      <ion-fab-button (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-fab-button>
     </ion-fab>
   <app-profile-card [user]="currentUser"></app-profile-card>
 </ion-content>

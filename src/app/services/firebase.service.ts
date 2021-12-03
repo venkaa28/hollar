@@ -112,6 +112,8 @@ export class FirebaseService {
               .then(r => {
                 console.log('added current user to new users connections list');
             });
+          }else{
+            alert('Not a valid Hollar NFC Tag');
           }
       });
   }
