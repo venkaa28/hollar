@@ -108,7 +108,7 @@ export class Tab3Page implements OnInit{
                       {path: 'file:///' + uri}
                     ).then( async (result) => {
                       await this.firebaseService.uploadDocument(
-                        'documents/' + this.currentUser.uid + '/' + data['file_name'], result['data'], this.currentUser.documents);
+                        'documents/' + this.currentUser.uid + '/' + data['file_name'], result['data'], this.currentUser.documents, data['file_name']);
                     })
 
                     // this.file.readAsDataURL('file:///' + correctPath, currentName)

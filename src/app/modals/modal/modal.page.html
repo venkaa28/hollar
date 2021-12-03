@@ -6,16 +6,9 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        TEXT
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-list>
+    <ion-item button *ngFor="let doc of this.docs" (click)="downloadAndPreviewFile(doc)">
+      <ion-label>{{doc}}</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

@@ -78,12 +78,12 @@ export class FirebaseService {
     ).subscribe();
   }
 
-  async uploadDocument(filePath, fileURI, currentDocs) {
-    const task = this.storage.ref(filePath).putString(fileURI, 'base64');
+  async uploadDocument(filePath, fileURI, currentDocs, filename) {
+    const task = this.storage.ref(filePath).putString(fileURI, 'base64', {contentType:'application/pdf'});
     task.snapshotChanges().pipe(
       finalize(() => {
         const copyDocs: string[] = [...currentDocs];
-        (copyDocs as string[]).push(filePath);
+        (copyDocs as string[]).push(filename);
         this.updateUser({documents: copyDocs}, firebase.auth().currentUser.uid);
       })
     ).subscribe();

@@ -39,7 +39,8 @@ export class ProfileCardComponent implements OnInit, OnChanges {
     const modal = await this.modalController.create({
       component: ModalPage,
       componentProps: {
-        'docs': this.user?.documents
+        'docs': this.user?.documents,
+        'uid': this.user?.uid
       }
     });
 
