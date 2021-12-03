@@ -22,6 +22,7 @@ import {userReducer} from "./stores/userStore/userReducer";
 import {connectionReducer} from "./stores/connectionStore/connectionsReducer";
 import { UserEffects } from './stores/userStore/userEffects';
 import { ConnectionsEffects } from './stores/connectionStore/connectionsEffects';
+import {ModalPageModule} from "./modals/modal/modal.module";
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { ConnectionsEffects } from './stores/connectionStore/connectionsEffects'
       connections: connectionReducer
     }),
     EffectsModule.forRoot([UserEffects, ConnectionsEffects]),
+    ModalPageModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

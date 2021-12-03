@@ -43,16 +43,6 @@ export class FirebaseService {
     );
 }
 
-  // writeUser$(user: UserProfile) {
-  //   const id = firebase.auth().currentUser.uid;
-  //   user.linkedAccounts = {...user.linkedAccounts};
-  //   return  this.afStore.collection('users').doc(id).set({user}).then(_ => {
-  //       console.groupCollapsed(`Firestore Service user [create]`);
-  //       console.log('[Id]', id, user);
-  //       console.groupEnd();
-  //   });
-  // }
-
   writeNewUser(user: UserProfile){
     // AFStore Code
     return new Promise<any>((resolve, reject) => {
@@ -88,25 +78,41 @@ export class FirebaseService {
     ).subscribe();
   }
 
+  async uploadDocument(filePath, fileURI, currentDocs, filename) {
+    const task = this.storage.ref(filePath).putString(fileURI, 'base64', {contentType:'application/pdf'});
+    task.snapshotChanges().pipe(
+      finalize(() => {
+        const copyDocs: string[] = [...currentDocs];
+        (copyDocs as string[]).push(filename);
+        this.updateUser({documents: copyDocs}, firebase.auth().currentUser.uid);
+      })
+    ).subscribe();
+  }
+
   createConnection(current_uid, new_uid: string, current_connects){
-      this.afStore.collection<UserProfile>('users').doc(new_uid).valueChanges().pipe(take(1)).subscribe( (data) => {
-        if (data){
-          const new_user_data = data;
-          console.log(new_user_data);
-          console.log(current_connects);
-          const copy_of_current_connects: string[] = [...current_connects];
-          copy_of_current_connects.push(new_uid);
-          console.log(copy_of_current_connects);
-          (new_user_data.connections as string[]).push(current_uid);
-          console.log(new_user_data);
-          this.afStore.collection<UserProfile>('users').doc<UserProfile>(current_uid).update( {'connections': copy_of_current_connects as []}).then( r => {
-            console.log('added the new user to the current users connection list');
-            alert("Successfully connected with new user");
-          });
-          this.afStore.collection<UserProfile>('users').doc<UserProfile>(new_uid).update({'connections': new_user_data.connections}).then(r => {
-            console.log('added current user to new users connections list');
-          });
-        }
+      this.afStore.collection<UserProfile>('users').doc(new_uid).valueChanges().pipe(take(1))
+        .subscribe( (data) => {
+          if (data){
+            const new_user_data = data;
+            console.log(new_user_data);
+            console.log(current_connects);
+            const copy_of_current_connects: string[] = [...current_connects];
+            copy_of_current_connects.push(new_uid);
+            console.log(copy_of_current_connects);
+            (new_user_data.connections as string[]).push(current_uid);
+            console.log(new_user_data);
+            this.afStore.collection<UserProfile>('users').doc<UserProfile>(current_uid)
+              .update( {'connections': copy_of_current_connects as []})
+              .then( r => {
+                console.log('added the new user to the current users connection list');
+                alert('Successfully connected with new user');
+            });
+            this.afStore.collection<UserProfile>('users').doc<UserProfile>(new_uid)
+              .update({'connections': new_user_data.connections})
+              .then(r => {
+                console.log('added current user to new users connections list');
+            });
+          }
       });
   }
 }

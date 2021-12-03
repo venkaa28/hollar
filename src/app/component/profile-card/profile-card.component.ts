@@ -2,6 +2,8 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {UserProfile} from '../../../models/userProfile.model';
 import {Observable} from "rxjs";
 import {AngularFireStorage} from "@angular/fire/storage";
+import { ModalController } from '@ionic/angular';
+import {ModalPage} from "../../modals/modal/modal.page";
 
 @Component({
   selector: 'app-profile-card',
@@ -11,9 +13,10 @@ import {AngularFireStorage} from "@angular/fire/storage";
 export class ProfileCardComponent implements OnInit, OnChanges {
 
   profileUrl: Observable<string | null>;
+  dataReturned: any;
 
   @Input() user: UserProfile;
-  constructor(private storage: AngularFireStorage) {
+  constructor(private storage: AngularFireStorage, public modalController: ModalController) {
 
   }
 
@@ -30,6 +33,23 @@ export class ProfileCardComponent implements OnInit, OnChanges {
 
   onNavigate(url) {
     window.open(url, '_blank');
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: ModalPage,
+      componentProps: {
+        'docs': this.user?.documents,
+        'uid': this.user?.uid
+      }
+    });
+
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null) {
+        this.dataReturned = dataReturned.data;
+      }
+    });
+    return await modal.present();
   }
 
 }

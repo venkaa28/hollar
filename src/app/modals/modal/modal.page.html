@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Documents</ion-title>
+    <ion-button (click) = "closeModal()" slot="start"><ion-icon name="arrow-back"></ion-icon></ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item button *ngFor="let doc of this.docs" (click)="downloadAndPreviewFile(doc)">
+      <ion-label>{{doc}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

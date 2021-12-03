@@ -8,6 +8,9 @@ import { ExploreContainerComponentModule } from '../../../explore-container/expl
 
 import { Tab3PageRoutingModule } from './tab3-routing.module';
 import { ProfileCardComponent } from '../../../component/profile-card/profile-card.component';
+import {IOSFilePicker} from "@ionic-native/file-picker/ngx";
+import { File } from '@ionic-native/file/ngx';
+
 
 @NgModule({
     imports: [
@@ -21,6 +24,7 @@ import { ProfileCardComponent } from '../../../component/profile-card/profile-ca
     exports: [
         ProfileCardComponent
     ],
-    declarations: [Tab3Page, ProfileCardComponent]
+    declarations: [Tab3Page, ProfileCardComponent],
+  providers: [IOSFilePicker, File]
 })
 export class Tab3PageModule {}

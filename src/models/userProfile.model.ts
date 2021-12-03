@@ -12,7 +12,7 @@ export class UserProfile {
   company: string;
   industry: string;
   job: string;
-  documents: [];
+  documents: string[];
   linkedAccounts: LinkedAccountsModel;
   profilePicture: string;
 
