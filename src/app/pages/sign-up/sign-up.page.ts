@@ -25,7 +25,6 @@ export class SignUpPage implements OnInit {
       phoneNumber: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
       //insert custom matching validator above]]
     });
   }
@@ -80,10 +79,6 @@ export class SignUpPage implements OnInit {
 
   get password(){
     return this.signupCredentials.get('password');
-  }
-
-  get confirmPassword(){
-    return this.signupCredentials.get('confirmPassword');
   }
 
 

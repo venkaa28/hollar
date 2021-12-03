@@ -43,8 +43,8 @@
         </ion-button>
       </ion-col>
       <ion-col>
-        <ion-button color="secondary">
-          <ion-icon size="large" name="information-circle"></ion-icon>
+        <ion-button *ngIf="this.user?.linkedAccounts.personalWebsite !== ''" (click)="onNavigate(this.user?.linkedAccounts.personalWebsite)" color="secondary">
+          <ion-icon size="large" name="link-outline"></ion-icon>
         </ion-button>
       </ion-col>
       <ion-col>
