@@ -18,19 +18,23 @@
 <!--  <ion-button expand="block">Send Profile via SMS</ion-button>-->
   <ion-grid>
     <ion-row class="ion-align-items-center">
-      <ion-text color="primary">
-        <h1>Use Your NFC Card To:</h1>
-      </ion-text>
-    </ion-row>
-    <ion-row style="height: 20px"></ion-row>
-    <ion-row class="ion-align-items-center">
-      <ion-col>
-        <ion-button (click)="onWriteClick()" size="large" shape="round" class="ion-align-items-center">Send Profile to Card</ion-button>
+      <ion-col size="12" class="ion-text-center">
+        <ion-text color="primary">
+          <h1>Use Your NFC Card To:</h1>
+        </ion-text>
       </ion-col>
     </ion-row>
     <ion-row style="height: 20px"></ion-row>
     <ion-row class="ion-align-items-center">
-      <ion-button (click)="onReadClick()" size="large" shape="round" class="ion-align-items-center">Read Profile from Card</ion-button>
+      <ion-col size="auto" class="ion-text-center">
+        <ion-button (click)="onWriteClick()" size="large" shape="round">Send Profile to Card</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row style="height: 20px"></ion-row>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="auto" class="ion-text-center">
+        <ion-button (click)="onReadClick()" size="large" shape="round">Read Profile from Card</ion-button>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
