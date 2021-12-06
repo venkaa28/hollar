@@ -8,6 +8,7 @@ import {Observable} from "rxjs";
 import {finalize, map, switchMap, take, tap} from "rxjs/operators";
 import * as UserActions from "../stores/userStore/userActions";
 import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class FirebaseService {
   public userObservable: Observable<UserProfile>;
 
   constructor(private afAuth: AngularFireAuth, private afDB: AngularFireDatabase,
-              private afStore: AngularFirestore, private storage: AngularFireStorage) {
+              private afStore: AngularFirestore, private storage: AngularFireStorage,
+              private router: Router) {
 
   }
 
@@ -104,14 +106,16 @@ export class FirebaseService {
             this.afStore.collection<UserProfile>('users').doc<UserProfile>(current_uid)
               .update( {'connections': copy_of_current_connects as []})
               .then( r => {
-                console.log('added the new user to the current users connection list');
-                alert('Successfully connected with new user');
+                console.log('added new user to current users connections list');
+                this.afStore.collection<UserProfile>('users').doc<UserProfile>(new_uid)
+                  .update({'connections': new_user_data.connections})
+                  .then(r2 => {
+                    console.log('added current user to new users connections list');
+                    this.router.navigate(['/tabs/tab2/view-connection', {index: new_uid}], );
+                  });
             });
-            this.afStore.collection<UserProfile>('users').doc<UserProfile>(new_uid)
-              .update({'connections': new_user_data.connections})
-              .then(r => {
-                console.log('added current user to new users connections list');
-            });
+
+            //alert('Successfully connected with new user');
           }
       });
   }

@@ -7,6 +7,7 @@ import * as UserActions from '../../../stores/userStore/userActions';
 import {selectUserObs} from '../../../stores/userStore/userReducer';
 import {Store} from '@ngrx/store';
 import {FirebaseService} from "../../../services/firebase.service";
+import {Router} from "@angular/router";
 
 // might need to downgrade to import { NFC, NDef } from '@ionic-native/nfc/ngx'
 
@@ -21,7 +22,8 @@ export class Tab1Page implements OnInit{
   currentUserObs: Observable<any>;
 
   constructor(private nfc: NFC, private ndef: Ndef, public platform: Platform, private store: Store<any>,
-              private firebaseService: FirebaseService) {
+              private firebaseService: FirebaseService,
+              private router: Router) {
     //nfc.showSettings().then(r => console.log(r));
   }
 
@@ -50,6 +52,7 @@ export class Tab1Page implements OnInit{
             //console.log(message);
             const uid = this.nfc.bytesToString(message[0].payload).substring(3);
             console.log(this.nfc.bytesToString(message[0].payload).substring(3));
+            //alert('uid: ' + uid);
             this.handleRead(uid);
           }
         },
@@ -82,12 +85,12 @@ export class Tab1Page implements OnInit{
   handleRead(uid){
     if(uid === this.currentUser.uid){
       alert('You cannot connect with yourself!');
-    } else if (uid in this.currentUser.connections){
+    } else if ((this.currentUser.connections as string[]).includes(uid as string)){
       alert('You are already connected with this user');
+      this.router.navigate(['/tabs/tab2/view-connection', {index: uid}], );
     }else {
+      alert('attempting to connect you with user, if valid');
       this.firebaseService.createConnection(this.currentUser.uid as string, uid, this.currentUser.connections);
-
-      //call create connection here
     }
   }
 }

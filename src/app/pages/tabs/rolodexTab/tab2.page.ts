@@ -56,8 +56,8 @@ export class Tab2Page implements OnInit {
         });
       }
     });
-    // this.searchText = '';
   }
+
   searchRolodex(searchText) {
     this.connectionListCopy = this.connectionList.filter(s =>
       s.firstName.toLowerCase().includes(searchText.target.value.toLowerCase()) ||
