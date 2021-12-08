@@ -9,7 +9,7 @@ Hollar is an all-in-one social media and networking application available on bot
 The tools used for the development of Hollar included the <b>Ionic<b/> framework along with <b>Angular.js<b/> for building out our front-end UI. <b>Firebase<b/> was used to store all of our user data, and the AngularFire package to communicate between front-end and database.
 
   ## Running our Code 
-  ### <i>Note: We do not provide the Firebase config files. Therefore you are not able to run the code successfully, it will fail when attempting to connect to Firebase on Log-in/Sign-up pages. <i/>
+  ### <i>Note: We do not provide the Firebase config files. Therefore you are not able to run the code successfully, it will fail when attempting to connect to Firebase on Log-in/Sign-up pages. </i>
   
 Once the code has been cloned into your local machine use: <br/>
   ``` npm ci ``` 
