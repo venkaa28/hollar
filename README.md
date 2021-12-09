@@ -23,7 +23,8 @@ We utilized a few different plug-ins for various functionality within our app. W
 
 ## Demo Video
 
-https://user-images.githubusercontent.com/16122738/145471552-857afd7d-08e7-468f-babf-6da157ab26e5.mov
+https://user-images.githubusercontent.com/16122738/145471724-0772402a-efbf-410f-a9fd-7a2dc7a5c54e.mov
+
 
 
 
