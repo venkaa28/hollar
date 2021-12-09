@@ -41,10 +41,6 @@
       <ion-label position="floating">Personal Website</ion-label>
       <ion-input type="text" formControlName="personalwebsite" value="{{this.currentUser.linkedAccounts.personalWebsite}}"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-label position="floating">Additional URLs</ion-label>
-      <ion-input type="text" formControlName="additionalURLs" value="[{{this.currentUser.linkedAccounts.additionalURLs}}]"></ion-input>
-    </ion-item>
     <ion-button type="submit" expand="block" (click)="saveUpdatedUserPage()">Save Profile Changes</ion-button>
   </form>
 </ion-content>

@@ -3,7 +3,7 @@
     <img src="assets/icon/profilePicPlaceholder.png">
   </ion-avatar>
   <ion-label>
-    <h1>{{ this.user?.firstName }} {{ this.user?.lastName }}</h1>
+    <h1>{{ this.user?.firstName }} <b>{{ this.user?.lastName }}</b> </h1>
     <h2 slot="start">{{ this.user?.email }} - {{ this.user?.phoneNumber }}</h2>
     <p>
       {{ this.user?.job}} - {{ this.user?.company}}

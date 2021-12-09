@@ -64,8 +64,6 @@ export class CustomizeProfilePage implements OnInit {
       instagram: [tempInstagram, []],
       twitter: [tempTwitter, []],
       personalwebsite: [this.currentUser.linkedAccounts.personalWebsite, []],
-      additionalURLs: [this.currentUser.linkedAccounts.additionalURLs, []]
-      //insert custom matching validator above]]
     });
   }
 
@@ -79,7 +77,7 @@ export class CustomizeProfilePage implements OnInit {
         linkedin: this.customizeProfileForm.get('linkedin').value,
         instagram: 'https://instagram.com/' + this.customizeProfileForm.get('instagram').value,
         personalWebsite: this.customizeProfileForm.get('personalwebsite').value,
-        additionalURLs: this.customizeProfileForm.get('additionalURLs').value,
+        additionalURLs: this.currentUser.linkedAccounts.additionalURLs,
       };
       const updateUserDict: UserProfile = {
         uid: this.currentUser.uid,
@@ -93,7 +91,7 @@ export class CustomizeProfilePage implements OnInit {
         linkedAccounts: updatedLinkedAccounts,
         job: this.customizeProfileForm.get('job').value,
         industry: this.customizeProfileForm.get('industry').value,
-        documents: [],
+        documents: this.currentUser.documents,
         profilePicture: this.currentUser.profilePicture
     };
     this.firebaseService.updateUser(updateUserDict, this.currentUser.uid)
