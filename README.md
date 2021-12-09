@@ -23,4 +23,7 @@ We utilized a few different plug-ins for various functionality within our app. W
 
 ## Demo Video
 
-https://github.com/venkaa28/hollar/blob/master/demo_video/demo_video.mov
+https://user-images.githubusercontent.com/16122738/145471552-857afd7d-08e7-468f-babf-6da157ab26e5.mov
+
+
+
