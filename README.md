@@ -20,3 +20,7 @@ Once the code has been cloned into your local machine use: <br/><br/>
 ## Additional Plug-ins
 
 We utilized a few different plug-ins for various functionality within our app. We used the phone-gap-nfc plug-in to integrate NFC functionality including reading and writing to an NFC tag using a devices built-in NFC capabilities. The Cordova Camera plugin plug-in allowed accessing the devices photos to select a profile picture as well as the device's camera for real-time picture taking and uploading to a user's profile. Lastly, we utilized PhoneGap's iOS File Picker to upload documents from the device's storage to a user profile (stored on Firebase backend). 
+
+## Demo Video
+
+https://github.com/venkaa28/hollar/blob/master/demo_video/demo_video.mov
